@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<project name="memset" default="run" basedir=".">
+    <!--<property name="gf" value="/home/tomasz/glassfish-3.1.2.2/glassfish/domains/domain1/autodeploy"/>-->
+    <property name="gf" value="C:\Users\Tomasz\glassfish-3.1.2.2\glassfish\domains\domain1\autodeploy"/>
+    <!--<property name="gf" value="/home/toks/glassfish-3.1.2.2/glassfish/domains/domain1/autodeploy"/>-->
+    <!--<property name="gf" value="/home/toks/glassfish3/glassfish/domains/domain1/autodeploy"/>-->
+    <property name="jetty" value="c:\projects\jetty9\webapps\"/>
+    <property name="tomcat" value="c:\Users\Tomasz\tomcat\webapps\"/>
+    
+    <target name="deploy">
+        <copy file="target/website-1.0.war" todir="${tomcat}"/>
+    </target>
+    <target name="undeploy">
+        <delete file="target/website-1.0.war"/>
+    </target>
+</project>

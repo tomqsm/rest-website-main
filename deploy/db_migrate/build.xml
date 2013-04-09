@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<project name="second_screen_db" default="run" basedir=".">
+    <property file="second_screen_db.properties"/>
+    <property file="../to_upload/config/upload.properties"/>
+
+    <target name="dump-out" description="dumps locally db">
+        <exec dir="${basedir}" executable="./dump_out.sh"></exec>
+    </target>
+    <target name="dump-in" description="executes a locally dumped sql file and creates db">
+        <exec dir="${basedir}" executable="dump_in.bat"></exec>
+    </target>
+    <target name="download-dump-remote" description="produces a dump file">
+        <scp file="${remote.server.user}:${password}@${remote.server.ip}:${remote.erest.dropbox.migration}/second_screen.sql" todir="."/>
+    </target>
+    
+    <target name="upload-dump-out">
+<!--        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.path}" keyfile="${key.file.location}" passphrase="${passphrase}" trust="true" >-->
+        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.erest.dropbox.migration}" password="${password}" >
+            <fileset dir=".">
+                <modified update="true" 
+                          seldirs="true"
+                          cache="propertyfile"
+                          algorithm="digest"
+                          comparator="equal">
+                    <param name="cache.cachefile"     value="../to_upload/config/db_migrate.properties"/>
+                    <param name="algorithm.algorithm" value="MD5"/>
+                </modified>
+                <exclude name="cache.properties" />
+                <exclude name="dump_in.bat" />
+                <exclude name="dump_out.bat" />
+            </fileset>
+        </scp>
+    </target>
+
+    
+    <target name="dump-in-remote">
+        <sshexec host="${remote.server.ip}"
+                 username="${remote.server.user}"
+                 password="${password}"
+                 command="cd /usr/java/ant/bin; ant -f ${remote.erest.dropbox.migration}/build.xml dump-in"/>
+    </target>
+    <target name="dump-out-remote">
+        <sshexec host="${remote.server.ip}"
+                 username="${remote.server.user}"
+                 password="${password}"
+                 command="cd /usr/java/ant/bin; ant -f ${remote.erest.dropbox.migration}/build.xml dump-out"/>
+    </target>
+    
+    <target name="sync2local" depends="dump-out, upload-dump-out, dump-in-remote" />
+    
+    <target name="sync2remote" depends="dump-out-remote, download-dump-remote, dump-in" />
+    
+</project>

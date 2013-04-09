@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    
+    <xsd:element name="id" type="xsd:string" />
+    <xsd:element name="text" type="xsd:string" />
+    <xsd:element name="image" type="xsd:string" />
+    <xsd:element name="category" type="xsd:string" />
+    
+    <xsd:element name="bookmark">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="text"/>
+                <xsd:element ref="image"/>
+                <xsd:element ref="category"/>
+            </xsd:sequence>
+            <xsd:attribute name="id" type="xsd:int" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

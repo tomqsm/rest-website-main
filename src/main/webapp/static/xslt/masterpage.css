@@ -1,0 +1,9 @@
+/*
+three column layout with the middle one felxible
+right column to be toggled (on or off) causing center to expand
+left can be fixed
+*/
+body {
+    background-color: gray;
+}
+

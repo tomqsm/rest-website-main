@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<project name="upload" default="run" basedir=".">
+    <property file="config/upload.properties"/>
+    <!--    U P L O A D   T O   S E R V E R   -->
+    <target name="upload">
+        <scp todir="${remote.server.user}@${remote.server.ip}:/home/tomaszk/erest/dropbox" password="sosniczany120PL" >
+            <fileset dir="${basedir}/post_box">
+                <modified update="true" 
+                          seldirs="true"
+                          cache="propertyfile"
+                          algorithm="digest"
+                          comparator="equal">
+                    <param name="cache.cachefile"     value="config/cache.properties"/>
+                    <param name="algorithm.algorithm" value="MD5"/>
+                </modified>
+                <exclude name="upload.properties" />
+                <exclude name="build.xml" />
+                <exclude name="cache.properties" />
+            </fileset>
+        </scp>
+    </target>
+    
+    <target name="send-sql">
+<!--        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.path}" keyfile="${key.file.location}" passphrase="${passphrase}" trust="true" >-->
+        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.erest.dropbox.migration}" password="${password}" >
+            <fileset dir=".">
+                <modified update="true" 
+                          seldirs="true"
+                          cache="propertyfile"
+                          algorithm="digest"
+                          comparator="equal">
+                    <param name="cache.cachefile"     value="config/db_migrate.properties"/>
+                    <param name="algorithm.algorithm" value="MD5"/>
+                </modified>
+                <exclude name="cache.properties" />
+            </fileset>
+        </scp>
+    </target>
+    
+    <target name="delete-cache">
+        <delete file="config/cache.properties"/>
+    </target>
+    <target name="clean-post_box">
+        <delete dir="post_box" includes="/**"/>
+    </target>
+    
+    <target name="force-upload" depends="delete-cache, upload"/>
+    <target name="force-upload-clean" depends="delete-cache, upload, clean-post_box"/>
+    
+    <target name="send-war">
+        <scp file="${war.location}" todir="root@${remote.server.ip}:${remote.gf.autodeploy}" password="${password}"/>
+    </target>
+
+    
+</project>

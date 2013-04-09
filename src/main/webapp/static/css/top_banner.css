@@ -1,0 +1,79 @@
+.bordered {
+    border: thin solid blue;
+}
+.fillRed {
+    background-color: red;
+}
+.fillViolet {
+    background-color: #cc00cc;
+}
+#advert {
+    /*    width: 1080px;
+        height: 315px;
+        background-image: url('../images/my_design.png');
+        background-repeat: no-repeat;  clears a read streak in IE9 */
+}
+#bannerContent {
+    position: relative;
+    width: 660px;
+    height: 267px;
+    /*    top: 30px;*/
+    left: 239px;
+    z-index: 7;
+}
+#bannerContentExtra{
+    position: relative;
+    width: 175px;
+    height: 267px;
+}
+
+#leftPointers:first-child {
+    position: relative;
+    top: 28px;
+    margin-bottom: 34px;
+    /*    for IE*/
+    width: 267px;
+
+}
+.leftPointer {
+    position: relative;
+    margin-top:5px;
+    width: 267px;
+    height: 62px;
+    z-index: 8;
+}
+.pointerText {
+    font-size: 20px;
+    padding-top: 20px;
+    width: 238px;
+    height: 41px;
+    display: block;
+}
+.pointerText:hover {
+    cursor: pointer;
+}
+
+.pointerOn, .pointerOff {
+    background-image: url('../images/sprite1.png');
+    background-repeat: no-repeat;
+    background-position: 0px;
+    height: 62px;
+    width: 267px;
+    /*    padding-top: 10px;*/
+    font-size: 1.2em;
+    text-align: center;
+}
+.pointerOff {
+    background-position: 0px -67px;
+    z-index: 5;
+}
+.pointerOn {
+    background-position: 0px 0px;
+    z-index: 10;
+}
+.pointerOff:hover {
+    background-image: url('../images/sprite1.png');
+    background-position: 0px -128px;
+    background-repeat: no-repeat;
+    z-index: 10;
+}
