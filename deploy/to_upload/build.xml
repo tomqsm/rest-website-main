@@ -3,7 +3,7 @@
     <property file="config/upload.properties"/>
     <!--    U P L O A D   T O   S E R V E R   -->
     <target name="upload">
-        <scp todir="${remote.server.user}@${remote.server.ip}:/home/tomaszk/erest/dropbox" password="sosniczany120PL" >
+        <scp todir="${remote.server.user}@${remote.server.ip}:/home/tomaszk/erest/dropbox" password="${password}" >
             <fileset dir="${basedir}/post_box">
                 <modified update="true" 
                           seldirs="true"
@@ -19,7 +19,7 @@
             </fileset>
         </scp>
     </target>
-    
+
     <target name="send-sql">
 <!--        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.path}" keyfile="${key.file.location}" passphrase="${passphrase}" trust="true" >-->
         <scp todir="${remote.server.user}@${remote.server.ip}:${remote.erest.dropbox.migration}" password="${password}" >

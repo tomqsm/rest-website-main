@@ -1,16 +1,87 @@
 <?xml version="1.0"?>
 <project name="memset" default="run" basedir=".">
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    <property file="../to_upload/config/upload.properties"/>
+    <property file="deploy/to_upload/config/upload.properties"/>
     <!--<property name="gf" value="/home/tomasz/glassfish-3.1.2.2/glassfish/domains/domain1/autodeploy"/>-->
     <property name="gf" value="C:\Users\Tomasz\glassfish-3.1.2.2\glassfish\domains\domain1\autodeploy"/>
     <!--<property name="gf" value="/home/toks/glassfish-3.1.2.2/glassfish/domains/domain1/autodeploy"/>-->
     <!--<property name="gf" value="/home/toks/glassfish3/glassfish/domains/domain1/autodeploy"/>-->
     <property name="jetty" value="c:\projects\jetty9\webapps\"/>
-    <property name="tomcat" value="c:\Users\Tomasz\tomcat\webapps\"/>
+    <property name="tomcat" value="c:\cygwin\home\Tomasz\tomcat\webapps\"/>
+    <property name="war.file" value="website-1.0.war"/>
+    <property name="server.autodeploy" value="${tomcat}"/>
     
-    <target name="deploy">
-        <copy file="target/website-1.0.war" todir="${tomcat}"/>
+    <target name="checkos">
+        <condition property="isWindows" value="true">
+            <os family="windows" />
+        </condition>
+
+        <condition property="isLinux" value="true">
+            <os family="unix" />
+        </condition>
+        <echo message="Checked OS." />
     </target>
-    <target name="undeploy">
-        <delete file="target/website-1.0.war"/>
+    
+    <!--this tasks runs via mvn ant-run is triggered there-->
+    <target name="deploy" depends="checkos">
+        <if>
+            <equals arg1="${isWindows}" arg2="true"/>
+            <then>
+                <copy file="target/${war.file}" todir="${server.autodeploy}"/>
+                <echo message="Copied ${war.file} to ${server.autodeploy}." />
+            </then>
+            <elseif>
+                <equals arg1="${isLinux}" arg2="true"/>
+                <then>
+                    <echo message="Unix, not copying war file to autodeploy." />
+                </then>
+            </elseif>
+            <else>
+                <echo message="Sorry, ant script didn not conditioned this OS." />
+            </else>
+        </if>
+    </target>
+    
+    <!--this tasks runs via mvn ant-run is triggered there-->
+    <target name="undeploy" depends="checkos">
+        <if>
+            <equals arg1="${isWindows}" arg2="true"/>
+            <then>
+                <delete file="${server.autodeploy}${war.file}"/>
+                <echo message="Deleted ${war.file} in ${server.autodeploy}." />
+            </then>
+            <elseif>
+                <equals arg1="${isLinux}" arg2="true"/>
+                <then>
+                    <echo message="Unix, not copying war file to autodeploy." />
+                </then>
+            </elseif>
+            <else>
+                <echo message="Sorry, ant script didn not conditioned this OS." />
+            </else>
+        </if>
+    </target>
+    
+    <target name="upload-project">
+        <scp todir="${remote.server.user}@${remote.server.ip}:${mvnprojects}/website-1.0" password="${password}" >
+            <fileset dir="${basedir}">
+                <modified update="true" 
+                          seldirs="true"
+                          cache="propertyfile"
+                          algorithm="digest"
+                          comparator="equal">
+                    <param name="cache.cachefile"     value="cache.properties"/>
+                    <param name="algorithm.algorithm" value="MD5"/>
+                </modified>
+                <!--<exclude name="deploy/**" />-->
+                <exclude name="target/**" />
+                <exclude name=".*" />
+                <exclude name="nb-configuration.xml" />
+                <exclude name="*.mwb" />
+                <!--<exclude name="build.xml" />-->
+                <exclude name="cache.properties" />
+            </fileset>
+        </scp>
     </target>
 </project>

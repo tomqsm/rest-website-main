@@ -1,3 +1,5 @@
 /target/
 /deploy/db_migrate/second_screen_db.properties
 /deploy/to_upload/config/
+nb-configuration.xml
+/cache.properties

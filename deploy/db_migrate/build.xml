@@ -1,20 +1,52 @@
 <?xml version="1.0"?>
 <project name="second_screen_db" default="run" basedir=".">
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
     <property file="second_screen_db.properties"/>
     <property file="../to_upload/config/upload.properties"/>
+<!--    <property name="isWindows" value="false" />
+    <property name="isLinux" value="false" />-->
+    
+    <target name="checkos">
+        <condition property="isWindows" value="true">
+            <os family="windows" />
+        </condition>
 
-    <target name="dump-out" description="dumps locally db">
-        <exec dir="${basedir}" executable="./dump_out.sh"></exec>
+        <condition property="isLinux" value="true">
+            <os family="unix" />
+        </condition>
     </target>
-    <target name="dump-in" description="executes a locally dumped sql file and creates db">
-        <exec dir="${basedir}" executable="dump_in.bat"></exec>
+
+    <target name="dump-out" depends="checkos" description="dumps locally db">
+        <echo message="isWindows: ${isWindows}" />
+        <if>
+            <equals arg1="${isWindows}" arg2="true"/>
+            <then>
+                <exec dir="${basedir}" executable="dump_out.bat"></exec>
+            </then>
+            <else>
+                <exec dir="${basedir}" executable="./dump_out.sh"></exec>
+            </else>
+        </if>
+    </target>
+    
+    <target name="dump-in" depends="checkos" description="executes a locally dumped sql file and creates db">
+        <echo message="isWindows: ${isWindows}" />
+        <if>
+            <equals arg1="${isWindows}" arg2="true"/>
+            <then>
+                <exec dir="${basedir}" executable="dump_in.bat"></exec>
+            </then>
+            <else>
+                <exec dir="${basedir}" executable="./dump_in.sh"></exec>
+            </else>
+        </if>
     </target>
     <target name="download-dump-remote" description="produces a dump file">
         <scp file="${remote.server.user}:${password}@${remote.server.ip}:${remote.erest.dropbox.migration}/second_screen.sql" todir="."/>
     </target>
     
     <target name="upload-dump-out">
-<!--        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.path}" keyfile="${key.file.location}" passphrase="${passphrase}" trust="true" >-->
+        <!--        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.path}" keyfile="${key.file.location}" passphrase="${passphrase}" trust="true" >-->
         <scp todir="${remote.server.user}@${remote.server.ip}:${remote.erest.dropbox.migration}" password="${password}" >
             <fileset dir=".">
                 <modified update="true" 

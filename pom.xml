@@ -12,7 +12,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
         
     <repositories>
@@ -162,7 +161,9 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.6</version>
                 <executions>
                     <execution>
                         <id>deploy-war</id>
@@ -172,7 +173,12 @@
                         </goals>
                         <configuration>
                             <tasks>
+                                <!--if - else dependent task requires ant-contrib-->
+                                <taskdef resource="net/sf/antcontrib/antlib.xml" 
+                                         classpathref="maven.plugin.classpath" />
+                                
                                 <ant target="deploy" inheritRefs="true"></ant>
+                                    
                             </tasks>
                         </configuration>
                     </execution>
@@ -184,11 +190,35 @@
                         </goals>
                         <configuration>
                             <tasks>
+                                <!--if - else dependent task requires ant-contrib-->
+                                <taskdef resource="net/sf/antcontrib/antlib.xml" 
+                                         classpathref="maven.plugin.classpath" />
+                                
                                 <ant target="undeploy" inheritRefs="true"></ant>
+                                    
                             </tasks>
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <!--required to run if else dependent tasks-->
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>1.0b3</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>ant</groupId>
+                                <artifactId>ant</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+<!--                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-nodeps</artifactId>
+                        <version>1.8.1</version>
+                    </dependency>-->
+                </dependencies>
             </plugin>
         </plugins>
     </build>

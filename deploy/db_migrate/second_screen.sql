@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.27, for Linux (i686)
+-- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
 --
 -- Host: localhost    Database: second_screen
 -- ------------------------------------------------------
--- Server version	5.5.27
+-- Server version	5.5.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `bookmark` (
   `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `category` varchar(90) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `bookmark` (
 
 LOCK TABLES `bookmark` WRITE;
 /*!40000 ALTER TABLE `bookmark` DISABLE KEYS */;
-INSERT INTO `bookmark` VALUES (1,'o łódź ludzie rotka do mnie','',''),(2,'dżem jest jak marmolada','',''),(3,'wróć do mnie','sexy lady',''),(4,'dżem jest jak marmolada','mój obraz',''),(5,'wersja piąta','piąty obraz','piąta kategoria');
+INSERT INTO `bookmark` VALUES (1,'o łódź ludzie rotka do mnie','',''),(2,'dżem jest jak marmolada','',''),(3,'wróć do mnie','sexy lady',''),(4,'dżem jest jak marmolada','mój obraz',''),(5,'wersja piąta','piąty obraz','piąta kategoria'),(6,'oj dziać się będzie ążź','obrazy jakiąą ruskich idiotów','kategoria filmu - bzdura'),(7,'ciąć','simply clercós','skoda');
 /*!40000 ALTER TABLE `bookmark` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-02-20 16:12:19
+-- Dump completed on 2013-04-20 23:30:11
