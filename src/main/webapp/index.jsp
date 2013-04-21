@@ -22,7 +22,7 @@
         <div id="advert" class="bordered">
             <div id="leftPointers" class="floatLeft"></div>
             <div id="bannerContentExtra" class="bordered floatRight fillRed">Tomasz Kuśmierczyk</br>Łódź</div>
-            <div id="bannerContent" class="bordered fillViolet">zawartosc bannera</div>
+            <div id="bannerContent" class="bordered fillViolet">zawartosc bannera :)</div>
         </div>
 
     </div>

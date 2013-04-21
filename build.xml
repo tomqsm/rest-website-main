@@ -24,7 +24,7 @@
     </target>
     
     <!--this tasks runs via mvn ant-run is triggered there-->
-    <target name="deploy" depends="checkos">
+    <target name="deploy" depends="checkos" description="Copying a war file to server autodeploy.">
         <if>
             <equals arg1="${isWindows}" arg2="true"/>
             <then>
@@ -44,7 +44,7 @@
     </target>
     
     <!--this tasks runs via mvn ant-run is triggered there-->
-    <target name="undeploy" depends="checkos">
+    <target name="undeploy" depends="checkos" description="Deleting war file from server autodeploy.">
         <if>
             <equals arg1="${isWindows}" arg2="true"/>
             <then>
@@ -74,7 +74,8 @@
                     <param name="cache.cachefile"     value="cache.properties"/>
                     <param name="algorithm.algorithm" value="MD5"/>
                 </modified>
-                <!--<exclude name="deploy/**" />-->
+                <!--exclude scripts from upload because they loose x and need chmod--> 
+                <exclude name="deploy/*.sh" />
                 <exclude name="target/**" />
                 <exclude name=".*" />
                 <exclude name="nb-configuration.xml" />

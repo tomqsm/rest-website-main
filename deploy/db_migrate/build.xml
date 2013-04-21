@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
-<project name="second_screen_db" default="run" basedir=".">
-    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+<project name="migration" default="run" basedir=".">
     <property file="second_screen_db.properties"/>
     <property file="../to_upload/config/upload.properties"/>
-<!--    <property name="isWindows" value="false" />
-    <property name="isLinux" value="false" />-->
     
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
     <target name="checkos">
         <condition property="isWindows" value="true">
             <os family="windows" />
@@ -17,7 +15,6 @@
     </target>
 
     <target name="dump-out" depends="checkos" description="dumps locally db">
-        <echo message="isWindows: ${isWindows}" />
         <if>
             <equals arg1="${isWindows}" arg2="true"/>
             <then>
@@ -30,7 +27,6 @@
     </target>
     
     <target name="dump-in" depends="checkos" description="executes a locally dumped sql file and creates db">
-        <echo message="isWindows: ${isWindows}" />
         <if>
             <equals arg1="${isWindows}" arg2="true"/>
             <then>
@@ -41,14 +37,15 @@
             </else>
         </if>
     </target>
+    
     <target name="download-dump-remote" description="produces a dump file">
         <scp file="${remote.server.user}:${password}@${remote.server.ip}:${remote.erest.dropbox.migration}/second_screen.sql" todir="."/>
     </target>
     
     <target name="upload-dump-out">
-        <!--        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.path}" keyfile="${key.file.location}" passphrase="${passphrase}" trust="true" >-->
-        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.erest.dropbox.migration}" password="${password}" >
-            <fileset dir=".">
+        <scp todir="${remote.server.user}@${remote.server.ip}:${remote.erest.dropbox.migration}" keyfile="${key.file.location}" passphrase="${passphrase}" trust="true" >
+            <!--<scp todir="${remote.server.user}@${remote.server.ip}:${remote.erest.dropbox.migration}" password="${password}" >-->
+            <fileset dir="${basedir}">
                 <modified update="true" 
                           seldirs="true"
                           cache="propertyfile"
@@ -57,6 +54,7 @@
                     <param name="cache.cachefile"     value="../to_upload/config/db_migrate.properties"/>
                     <param name="algorithm.algorithm" value="MD5"/>
                 </modified>
+                <include name="second_screen.sql" />
                 <exclude name="cache.properties" />
                 <exclude name="dump_in.bat" />
                 <exclude name="dump_out.bat" />
@@ -66,6 +64,7 @@
 
     
     <target name="dump-in-remote">
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
         <sshexec host="${remote.server.ip}"
                  username="${remote.server.user}"
                  password="${password}"
