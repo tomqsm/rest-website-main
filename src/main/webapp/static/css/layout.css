@@ -1,6 +1,6 @@
 body {
     font-family: Verdana;
-    background-image: url('../images/snowFlakes.png');
+    /*background-image: url('../images/snowFlakes.png');*/
 }
 h1 {
     font-size: 24px;
@@ -28,6 +28,39 @@ h1 {
     width: 825px;
     padding: 5px 5px 5px 5px;
 }
+#contentContainer{
+    float: left;
+    display: block;
+    width: 820px;
+    padding: 5px;
+}
+#dynamicSquare {
+    position: relative;
+    left: 1010px;
+    top: -140px;
+}
+#jestestu {
+    position: relative;
+    z-index: 10;
+    top: -85px;
+}
+#nav {
+    width: 250px;
+    float: left;
+}
+#nav ul {
+	list-style-position: inside;
+	list-style-image: none;
+	list-style-type: none;
+	position: relative;
+	z-index: auto;
+}
+#nav ul li:first-child {
+    background-color: greenyellow;
+}
+#jestestu h2 {
+    font-size: 15px;
+}
 .closable {
     background-image: url('../images/sprite1.png');
     background-position: -237px -64px;
@@ -41,15 +74,19 @@ h1 {
     height: 600px;
 }
 .snowFlakes {
-    background-image: url('../images/snowFlakes.png');
+    /*background-image: url('../images/snowFlakes.png');*/
     background-repeat: no-repeat;
     background-position: top;
 }
 .center {
-    width: 1080px;
+    width: 1090px;
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+.center:first-child {
+    /*background-color: greenyellow;*/
+    height: 300px;
 }
 .padded5 {
     padding: 5px 5px 5px 5px;
@@ -67,3 +104,5 @@ h1 {
 .clearRight {
     clear: right;
 }
+
+

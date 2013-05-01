@@ -9,7 +9,7 @@
     <!--<property name="gf" value="/home/toks/glassfish3/glassfish/domains/domain1/autodeploy"/>-->
     <property name="jetty" value="c:\projects\jetty9\webapps\"/>
     <property name="tomcat" value="c:\cygwin\home\Tomasz\tomcat\webapps\"/>
-    <property name="war.file" value="website-1.0.war"/>
+    <property name="war.file" value="lukasfloorcom-1.0.war"/>
     <property name="server.autodeploy" value="${tomcat}"/>
     
     <target name="checkos">
@@ -64,7 +64,7 @@
     </target>
     
     <target name="upload-project">
-        <scp todir="${remote.server.user}@${remote.server.ip}:${mvnprojects}/website-1.0" password="${password}" >
+        <scp todir="${remote.server.user}@${remote.server.ip}:${mvnprojects}/lukasfloorcom-1.0" password="${password}" >
             <fileset dir="${basedir}">
                 <modified update="true" 
                           seldirs="true"

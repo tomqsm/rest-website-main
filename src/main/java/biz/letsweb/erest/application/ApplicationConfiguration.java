@@ -1,6 +1,7 @@
 package biz.letsweb.erest.application;
 
 import biz.letsweb.erest.resources.BookmarkResource;
+import biz.letsweb.erest.resources.CyklinowanieResource;
 import biz.letsweb.erest.resources.GeneratedImageResource;
 import biz.letsweb.erest.resources.IndexResource;
 import biz.letsweb.erest.resources.StatusResource;
@@ -25,6 +26,7 @@ public class ApplicationConfiguration extends Application {
         resources.add(GeneratedImageResource.class);
         resources.add(StatusResource.class);
         resources.add(IndexResource.class);
+        resources.add(CyklinowanieResource.class);
         return resources;
     }
     

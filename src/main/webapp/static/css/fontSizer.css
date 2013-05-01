@@ -2,3 +2,18 @@
     width: 100px;
     height: 100px;
 }
+#address {
+    text-align: right;
+    text-height: text-size;
+    left: 150px;
+    width: 250px;
+    position: relative;
+    top: -230px;
+    left: 800px;
+    /*visibility: hidden;*/
+}
+#address #firm h2 {
+    font-size: 26px;
+    font-weight: bold;
+    /*visibility: hidden;*/
+}

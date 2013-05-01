@@ -108,14 +108,14 @@ PointersView = Backbone.View.extend({
         this.interval = this.startIntervalMarker(this.pointerInterval, 3000);
     },
     doAjaxGetJson: function(pointerView) {
-        $.getJSON('/website-1.0/message/' + (pointerView.modelView.model.get('id')+1), function(data) {
+        $.getJSON('/lukasfloorcom-1.0/message/' + (pointerView.modelView.model.get('id')+1), function(data) {
             alert(data.text);
         });
     }
 }),
-MyController = Backbone.Router.extend({
+MyRouter = Backbone.Router.extend({
     routes: {
-        "website-1.0/rest": "say"
+        "lukasfloorcom-1.0/rest": "say"
     },
     say: function(something) {
         alert('hello');
@@ -124,7 +124,7 @@ MyController = Backbone.Router.extend({
 pubsub = _.extend({}, Backbone.Events);
 $(function() {
     new PointersView({vent: pubsub});
-    new MyController();
+    new MyRouter();
     // Enable pushState for compatible browsers.
     var enablePushState = true;
     var pushState = !!(enablePushState && window.history && window.history.pushState);
