@@ -7,17 +7,18 @@ menuApp.menuView = Backbone.View.extend({
     menuGroups: this.$('ul'),
     initialize: function() {
         this.menuGroupsViews = [];
-        console.log('initialising menuView ... ');
         var self = this;
-        console.log('initialising');
         _.each(this.menuGroups, function(element, index, list) {
             var $ul = $(element);
             self.menuGroupsViews.push(new menuApp.groupView({$list: $ul}));
         });
         this.render();
     },
+    destroy: function() {
+        console.log('destroying menu view');
+        _.invoke(this.menuGroupsViews, 'destroy');
+    },
     countMenuGroups: function() {
-        console.log("counting menu groups");
         return this.menuGroups.length;
     },
     countMenuGroupsViews: function() {
@@ -35,7 +36,6 @@ menuApp.menuView = Backbone.View.extend({
     },
 //re-rendering the App just means refreshing the statistics -- the rest of the app doesn't change.
     render: function() {
-        console.log('rendering');
 //        $(this.menuGroups[2]).hide();
     }
 });
@@ -46,8 +46,8 @@ menuApp.groupView = Backbone.View.extend({
         this.el = listObject.$list;
         var lis = this.el.find('li');
         var groupName = '';
-        var self = this;
-        _.each(lis, function(element, index, list) {
+        //proxy used to bind to this
+        _.each(lis, $.proxy(function(element, index, list) {
             var itemModel = new menuApp.menuItemModel();
             var $li = $(element);
             // we get ul passed in and each first item is a header
@@ -56,9 +56,13 @@ menuApp.groupView = Backbone.View.extend({
             }
             itemModel.set({group: groupName});
             itemModel.set({text: $li.text()});
-            self.itemView.push(new menuApp.itemView({model: itemModel, el: $li}));
-        });
+            this.itemView.push(new menuApp.itemView({model: itemModel, el: $li}));
+        }, this));
         this.groupName = groupName;
+    },
+    destroy: function() {
+        console.log('destroying group view');
+        _.invoke(this.itemView, 'destroy');
     },
     countLis: function() {
         return this.itemView.length;
@@ -77,18 +81,26 @@ menuApp.menuItemModel = Backbone.Model.extend({
 });
 menuApp.itemView = Backbone.View.extend({
     events: {
+        // events to all items in group where clicked item 
+        'click': 'activateLi'
     },
     initialize: function(options) {
         this.model = options.model;
         this.el = options.el;
-        var self = this;
+    },
+    destroy: function() {
+        console.log('destroying itemView');
     },
     getGroupName: function() {
         return this.model.get('group');
+    },
+    activateLi: function(event) {
+        var text = this.model.get('text');
+        alert('clicked ' + event.target.parentElement.offsetTop);
+        
     }
 });
 $(function() {
-    console.log('in menu app');
 //    var itemview = new menuApp.itemView();
-//    var menuview = new menuApp.menuView();
+    var menuview = new menuApp.menuView();
 });

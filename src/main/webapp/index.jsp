@@ -17,51 +17,19 @@
     </head>
 </head>
 <body>
-    <div>
+    <div class="relativePointer"></div>
+<!--    <div>
         <h1 id="qunit-header">QUnit Test Suite</h1>
         <h2 id="qunit-banner"></h2>
         <div id="qunit-testrunner-toolbar"></div>
         <h2 id="qunit-userAgent"></h2>
         <ol id="qunit-tests"></ol>
-    </div>
+    </div>-->
     <div id="header" class="center" style="z-index: 0;">
-
         <img src="static/images/room1.jpg" class="floatLeft">
 
         <div class="floatRight">
-            <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="690" height="250" id="slogans" align="middle">
-                <param name="movie" value="static/flash/slogans.swf" />
-                <param name="quality" value="best" />
-                <param name="bgcolor" value="#999999" />
-                <param name="play" value="true" />
-                <param name="loop" value="true" />
-                <param name="wmode" value="transparent" />
-                <param name="scale" value="showall" />
-                <param name="menu" value="true" />
-                <param name="devicefont" value="false" />
-                <param name="salign" value="" />
-                <param name="allowScriptAccess" value="sameDomain" />
-                <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="static/flash/slogans.swf" width="690" height="250">
-                    <param name="movie" value="static/flash/slogans.swf" />
-                    <param name="quality" value="best" />
-                    <param name="bgcolor" value="#999999" />
-                    <param name="play" value="true" />
-                    <param name="loop" value="true" />
-                    <param name="wmode" value="transparent" />
-                    <param name="scale" value="showall" />
-                    <param name="menu" value="true" />
-                    <param name="devicefont" value="false" />
-                    <param name="salign" value="" />
-                    <param name="allowScriptAccess" value="sameDomain" />
-                    <!--<![endif]-->
-                    <a href="http://www.adobe.com/go/getflash">
-                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
-                    </a>
-                    <!--[if !IE]>-->
-                </object>
-                <!--<![endif]-->
-            </object>
+            <%@ include file="static\flash\slogansInclude.html" %>
         </div>
 
         <div id="address" class="">
@@ -73,7 +41,7 @@
                 <p>Bielsko-Biała</p>
             </div>
         </div>
-        <div id="jestestu"><h2>Jesteś tutaj: "Strona startowa"</h2></div>
+        <div id="jestestu">Jesteś tutaj: <span>"Strona startowa"</span></div>
         <img id="dynamicSquare" src="http://<%= request.getServerName()%>:<%= request.getServerPort()%>/lukasfloorcom-1.0/image" alt="my sreamed image"/>
     </div>
     <div class="center bordered">
@@ -113,10 +81,10 @@
     <script src="static/js/menuApp.js"></script>
 
     <!--Tests dependencies.-->
-    <link rel="stylesheet" href="static/js/libs/qunit/qunit-1.9.0.css">
-    <script src="static/js/libs/qunit/qunit-1.9.0.js"></script>
-
-    <script src="static/js/menuAppTests.js"></script>
+    <!--    <link rel="stylesheet" href="static/js/libs/qunit/qunit-1.9.0.css">
+        <script src="static/js/libs/qunit/qunit-1.9.0.js"></script>
+    
+        <script src="static/js/menuAppTests.js"></script>-->
 
 </body>
 </html>

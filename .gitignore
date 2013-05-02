@@ -3,4 +3,4 @@
 /deploy/to_upload/config/
 nb-configuration.xml
 /cache.properties
-_notes/**
+**/_notes/

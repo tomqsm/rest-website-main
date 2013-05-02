@@ -69,6 +69,9 @@ h1 {
     height: 25px;
     width: 25px;
 }
+.relativePointer{
+    position: relative
+}
 .decoratorBackground {
     width: 10%;
     height: 600px;
