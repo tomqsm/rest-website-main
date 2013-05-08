@@ -29,7 +29,7 @@
         <img src="static/images/room1.jpg" class="floatLeft">
 
         <div class="floatRight">
-            <%@ include file="static\flash\slogansInclude.html" %>
+            <%--<%@ include file="static\flash\slogansInclude.html" %>--%>
         </div>
 
         <div id="address" class="">
@@ -41,7 +41,7 @@
                 <p>Bielsko-Biała</p>
             </div>
         </div>
-        <div id="jestestu">Jesteś tutaj: <span>"Strona startowa"</span></div>
+        <div id="jestestu"><span>"Strona startowa"</span></div>
         <img id="dynamicSquare" src="http://<%= request.getServerName()%>:<%= request.getServerPort()%>/lukasfloorcom-1.0/image" alt="my sreamed image"/>
     </div>
     <div class="center bordered">
@@ -78,6 +78,8 @@
     <script src="static/js/libs/jquery-1.8.1.min.js"></script>
     <script src="static/js/libs/underscore.js"></script>
     <script src="static/js/libs/backbone.js"></script>
+    <script src="static/js/locatorApp.js"></script>
+    <!--<script src="static/js/advertApp.js"></script>-->
     <script src="static/js/menuApp.js"></script>
 
     <!--Tests dependencies.-->

@@ -55,6 +55,9 @@ h1 {
 	position: relative;
 	z-index: auto;
 }
+#nav ul li:hover {
+    cursor: pointer;
+}
 #nav ul li:first-child {
     background-color: greenyellow;
 }

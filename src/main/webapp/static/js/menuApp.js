@@ -41,9 +41,9 @@ menuApp.menuView = Backbone.View.extend({
 });
 
 menuApp.groupView = Backbone.View.extend({
-    initialize: function(listObject) {
+    initialize: function(options) {
         this.itemView = [];
-        this.el = listObject.$list;
+        this.el = options.$list;
         var lis = this.el.find('li');
         var groupName = '';
         //proxy used to bind to this
@@ -95,12 +95,68 @@ menuApp.itemView = Backbone.View.extend({
         return this.model.get('group');
     },
     activateLi: function(event) {
-        var text = this.model.get('text');
-        alert('clicked ' + event.target.parentElement.offsetTop);
-        
+        var text = this.model.get('text'), group = this.model.get('group');
+        event.preventDefault();
+        this.updateJestestu(group, text);
+        this.sendGetRequest(group, text);
+    },
+    updateJestestu: function(group, text) {
+        var $jestestuSpan = $('#jestestu span'),
+                separator = ' » ';
+
+//        alert('clicked ' + event.target.parentElement.offsetTop);
+        if (group === text) {
+            $jestestuSpan.text(group);
+        } else {
+            $jestestuSpan.text(group + separator + text);
+        }
+        $('#contentContainer h1').text(separator + text);
+    },
+    sendGetRequest: function(group, text) {
+        var rootUrl = 'lukasfloorcom-1.0/';
+        console.log('sending get request from ' + this.model.get('text'));
+        if (group === text) {
+            window.location.hash = group;
+        } else {
+            Backbone.history.navigate(this.encodeToUrl(group) + '-' + this.encodeToUrl(text), true);
+//            window.location = this.encodeToUrl(group) + '-' + this.encodeToUrl(text);
+        }
+        // todo
+    },
+    encodeToUrl: function(textToEncode) {
+        var encoded, disallowed = 'ĄąĘęŚśŻżŹźÓóŁłŃń', allowed = 'AaEeSsZzZzOoLlNn';
+        encoded = this.replace(disallowed, allowed, textToEncode);
+        return encoded;
+    },
+    replace: function(disallowed, allowed, string) {
+        var encoded = string.replace(/ /g, '-');
+        _.each(disallowed.split(""), function(element, index, list) {
+            var regex = new RegExp(element, "gi");
+            encoded = encoded.replace(regex, allowed[index + 1]);
+        });
+        return encoded;
+    }
+});
+menuApp.MyRouter = Backbone.Router.extend({
+    routes: {
+        "Schody-Instalacja-nowych-schodow": "say"
+    },
+    say: function() {
+        alert('hello');
     }
 });
 $(function() {
+    // Enable pushState for compatible browsers.
+    var menuview = new menuApp.menuView(),
+    router = new menuApp.MyRouter(),
+    enablePushState = true,
+    pushState = !!(enablePushState && window.history && window.history.pushState),
+    historyHash = {pushState: pushState};
+//    if (pushState) {
+//        historyHash = {pushState: pushState}
+//    } else {
+//        historyHash = {pushState: pushState, root: 'lukasfloorcom-1.0/'}
+//    }
+    Backbone.history.start(historyHash);
 //    var itemview = new menuApp.itemView();
-    var menuview = new menuApp.menuView();
 });
