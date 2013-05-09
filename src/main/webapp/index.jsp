@@ -18,18 +18,26 @@
 </head>
 <body>
     <div class="relativePointer"></div>
-<!--    <div>
-        <h1 id="qunit-header">QUnit Test Suite</h1>
-        <h2 id="qunit-banner"></h2>
-        <div id="qunit-testrunner-toolbar"></div>
-        <h2 id="qunit-userAgent"></h2>
-        <ol id="qunit-tests"></ol>
-    </div>-->
+    <!--    <div>
+            <h1 id="qunit-header">QUnit Test Suite</h1>
+            <h2 id="qunit-banner"></h2>
+            <div id="qunit-testrunner-toolbar"></div>
+            <h2 id="qunit-userAgent"></h2>
+            <ol id="qunit-tests"></ol>
+        </div>-->
     <div id="header" class="center" style="z-index: 0;">
-        <img src="static/images/room1.jpg" class="floatLeft">
+        <div id="categoryIllustrator" class="floatLeft" >
+
+            <div class="heap">
+                <div class="layer zero"><img src="static/images/room1.jpg" class="" style=""></div>
+                <div class="layer one bordered"><span class="" style="display: inline-block;">Drewniane podłogi</span></div>
+            </div>
+
+        </div>
+        <!--<div class="clearLeft"></div>-->
 
         <div class="floatRight">
-            <%--<%@ include file="static\flash\slogansInclude.html" %>--%>
+            <%@ include file="static\flash\slogansInclude.html" %>
         </div>
 
         <div id="address" class="">
@@ -41,10 +49,11 @@
                 <p>Bielsko-Biała</p>
             </div>
         </div>
-        <div id="jestestu"><span>"Strona startowa"</span></div>
-        <img id="dynamicSquare" src="http://<%= request.getServerName()%>:<%= request.getServerPort()%>/lukasfloorcom-1.0/image" alt="my sreamed image"/>
+        <!--<img id="dynamicSquare" src="http://<%= request.getServerName()%>:<%= request.getServerPort()%>/lukasfloorcom-1.0/image" alt="my sreamed image"/>-->
+        <img id="logo" src="static/images/logo.png" alt="logo" height="120" width="120"/>
     </div>
-    <div class="center bordered">
+    <div id="jestestu" class="center"><span>Strona startowa</span></div>
+    <div id="" class="center">
         <div id="nav" class="bordered">
             <ul>
                 <li>Podłoga</li>
@@ -63,14 +72,14 @@
                 <li>Kontakt</li>
             </ul>
             <ul>
-                <li>Strona startowa</li>
+                <li>Witamy</li>
                 <li>Informacje ogólne</li>
                 <li>O nas</li>
             </ul>
 
         </div>
         <div id="contentContainer" class="bordered">
-            <h1>Informacje na początek</h1>
+            <h1>» Strona startowa</h1>
         </div>
     </div>
 

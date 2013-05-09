@@ -11,6 +11,32 @@ h1 {
 #growl {
     height: 30px;
 }
+#header {
+    height: 250px;
+}
+#categoryIllustrator {
+
+}
+.heap {
+   position: relative;
+}
+.layer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+}
+.zero {
+    z-index: 0;
+}
+.one {
+    z-index: 1;
+}
+#categoryIllustrator .heap {
+    width: 400px; height: 250px;
+}
 #menu {
     width: 240px;
 }
@@ -34,26 +60,29 @@ h1 {
     width: 820px;
     padding: 5px;
 }
+#logo {
+    position: relative;
+    left: 930px;
+    top: -230px;
+}
 #dynamicSquare {
     position: relative;
     left: 1010px;
     top: -140px;
 }
 #jestestu {
-    position: relative;
-    z-index: 10;
-    top: -85px;
+    padding: 10px;
 }
 #nav {
     width: 250px;
     float: left;
 }
 #nav ul {
-	list-style-position: inside;
-	list-style-image: none;
-	list-style-type: none;
-	position: relative;
-	z-index: auto;
+    list-style-position: inside;
+    list-style-image: none;
+    list-style-type: none;
+    position: relative;
+    z-index: auto;
 }
 #nav ul li:hover {
     cursor: pointer;
@@ -68,7 +97,7 @@ h1 {
     background-image: url('../images/sprite1.png');
     background-position: -237px -64px;
     background-repeat: no-repeat;
-/*    display: block;*/
+    /*    display: block;*/
     height: 25px;
     width: 25px;
 }

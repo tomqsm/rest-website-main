@@ -77,6 +77,7 @@
                 <!--exclude scripts from upload because they loose x and need chmod--> 
                 <exclude name="deploy/*.sh" />
                 <exclude name="target/**" />
+                <exclude name="_notes/**" />
                 <exclude name=".*" />
                 <exclude name="nb-configuration.xml" />
                 <exclude name="*.mwb" />

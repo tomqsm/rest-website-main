@@ -16,6 +16,7 @@
                 <exclude name="upload.properties" />
                 <exclude name="build.xml" />
                 <exclude name="cache.properties" />
+                <exclude name="_notes/**" />
             </fileset>
         </scp>
     </target>

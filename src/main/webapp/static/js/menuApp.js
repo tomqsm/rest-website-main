@@ -116,9 +116,9 @@ menuApp.itemView = Backbone.View.extend({
         var rootUrl = 'lukasfloorcom-1.0/';
         console.log('sending get request from ' + this.model.get('text'));
         if (group === text) {
-            window.location.hash = group;
+            Backbone.history.navigate(rootUrl + this.encodeToUrl(group), true);
         } else {
-            Backbone.history.navigate(this.encodeToUrl(group) + '-' + this.encodeToUrl(text), true);
+            Backbone.history.navigate(rootUrl + this.encodeToUrl(group) + '-' + this.encodeToUrl(text), true);
 //            window.location = this.encodeToUrl(group) + '-' + this.encodeToUrl(text);
         }
         // todo
@@ -139,7 +139,7 @@ menuApp.itemView = Backbone.View.extend({
 });
 menuApp.MyRouter = Backbone.Router.extend({
     routes: {
-        "Schody-Instalacja-nowych-schodow": "say"
+        "lukasfloorcom-1.0/Schody-Instalacja-nowych-schodow": "say"
     },
     say: function() {
         alert('hello');
@@ -151,12 +151,13 @@ $(function() {
     router = new menuApp.MyRouter(),
     enablePushState = true,
     pushState = !!(enablePushState && window.history && window.history.pushState),
-    historyHash = {pushState: pushState};
+//    historyHash = {};
 //    if (pushState) {
-//        historyHash = {pushState: pushState}
-//    } else {
 //        historyHash = {pushState: pushState, root: 'lukasfloorcom-1.0/'}
+//    } else {
+//        historyHash = {pushState: pushState}
 //    }
+        historyHash = {pushState: pushState}
     Backbone.history.start(historyHash);
 //    var itemview = new menuApp.itemView();
 });
