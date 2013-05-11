@@ -30,7 +30,7 @@
 
             <div class="heap">
                 <div class="layer zero"><img src="static/images/room1.jpg" class="" style=""></div>
-                <div class="layer one bordered"><span class="" style="display: inline-block;">Drewniane podłogi</span></div>
+                <div class="layer one"><span id="categoryText" class="" style="position: relative; top: 220px; font-size: 24px; color: whitesmoke">Podłoga</span></div>
             </div>
 
         </div>
@@ -50,14 +50,14 @@
             </div>
         </div>
         <!--<img id="dynamicSquare" src="http://<%= request.getServerName()%>:<%= request.getServerPort()%>/lukasfloorcom-1.0/image" alt="my sreamed image"/>-->
-        <img id="logo" src="static/images/logo.png" alt="logo" height="120" width="120"/>
+        <a href="http://<%= request.getServerName()%>:<%= request.getServerPort()%>/lukasfloorcom-1.0"><img id="logo" src="static/images/logo.png" alt="logo" height="120" width="120"/></a>
     </div>
-    <div id="jestestu" class="center"><span>Strona startowa</span></div>
+    <div id="jestestu" class="center"><span>Witamy</span></div>
     <div id="" class="center">
-        <div id="nav" class="bordered">
+        <div id="nav" class="">
             <ul>
                 <li>Podłoga</li>
-                <li><a href="cyklinowanie">Ondnowa podłogi - cyklinowanie</a></li>
+                <li><a href="cyklinowanie">Cyklinowanie</a></li>
                 <li>Instalacja nowej podłogi</li>
             </ul>
             <ul>
@@ -72,14 +72,24 @@
                 <li>Kontakt</li>
             </ul>
             <ul>
-                <li>Witamy</li>
+                <li><div id="pointerek">
+                        <div class="heap">
+                            <div class="layer zero"></div>
+                            <div class="layer one arrow"></div>
+                        </div>
+                    </div>
+                    Witamy
+                </li>
                 <li>Informacje ogólne</li>
                 <li>O nas</li>
             </ul>
 
         </div>
-        <div id="contentContainer" class="bordered">
-            <h1>» Strona startowa</h1>
+        <div id="contentContainer" class="">
+            <h1>Witamy</h1>
+            <!--<span id="pointerek" style="position: relative; top: 130px;">»</span><h1>Witamy</h1>-->
+
+
         </div>
     </div>
 
@@ -87,8 +97,11 @@
     <script src="static/js/libs/jquery-1.8.1.min.js"></script>
     <script src="static/js/libs/underscore.js"></script>
     <script src="static/js/libs/backbone.js"></script>
+    <script src="static/js/globals.js"></script>
     <script src="static/js/locatorApp.js"></script>
     <!--<script src="static/js/advertApp.js"></script>-->
+    <script src="static/js/utilsApp.js"></script>
+    <script src="static/js/textimageApp.js"></script>
     <script src="static/js/menuApp.js"></script>
 
     <!--Tests dependencies.-->

@@ -1,3 +1,4 @@
+// requires utilsApp
 var menuApp = menuApp || {};
 menuApp.groupModel = Backbone.Model.extend({
     text: ''
@@ -16,6 +17,8 @@ menuApp.menuView = Backbone.View.extend({
     },
     destroy: function() {
         console.log('destroying menu view');
+        // Calls the method named by destroy on each value in the list. 
+        // Any extra arguments passed to invoke will be forwarded on to the method invocation.
         _.invoke(this.menuGroupsViews, 'destroy');
     },
     countMenuGroups: function() {
@@ -34,17 +37,21 @@ menuApp.menuView = Backbone.View.extend({
     getGroupNameByIndex: function(index) {
         return this.getGroupByIndex(index).getGroupName();
     },
-//re-rendering the App just means refreshing the statistics -- the rest of the app doesn't change.
     render: function() {
-//        $(this.menuGroups[2]).hide();
+        // set starting <li>
+        this.menuGroupsViews[3].itemViews[0].markActive();
     }
 });
 
 menuApp.groupView = Backbone.View.extend({
+    events: {
+        // events to all items in group where clicked item 
+        'click': 'listClicked'
+    },
     initialize: function(options) {
-        this.itemView = [];
-        this.el = options.$list;
-        var lis = this.el.find('li');
+        this.itemViews = [];
+        this.$el = options.$list;
+        var lis = this.$el.find('li');
         var groupName = '';
         //proxy used to bind to this
         _.each(lis, $.proxy(function(element, index, list) {
@@ -52,23 +59,33 @@ menuApp.groupView = Backbone.View.extend({
             var $li = $(element);
             // we get ul passed in and each first item is a header
             if (index === 0) {
-                groupName = $li.text();
+                groupName = $li.text().trim();
             }
             itemModel.set({group: groupName});
             itemModel.set({text: $li.text()});
-            this.itemView.push(new menuApp.itemView({model: itemModel, el: $li}));
+            this.itemViews.push(new menuApp.itemView({model: itemModel, $el: $li, $parentUl: this.$el, parentView: this}));
         }, this));
         this.groupName = groupName;
     },
+    listClicked: function(event) {
+        console.log('List clicked after item.');
+        this.render();
+    },
     destroy: function() {
         console.log('destroying group view');
-        _.invoke(this.itemView, 'destroy');
+        _.invoke(this.itemViews, 'destroy');
     },
     countLis: function() {
-        return this.itemView.length;
+        return this.itemViews.length;
     },
     getGroupName: function() {
         return this.groupName;
+    },
+    render: function() {
+
+    },
+    setActiveModel: function(model) {
+        this.model = model;
     }
 });
 menuApp.menuItemModel = Backbone.Model.extend({
@@ -77,16 +94,39 @@ menuApp.menuItemModel = Backbone.Model.extend({
         text: 'some text',
         href: '',
         active: ''
+    },
+    initialize: function() {
+        publishSubscribe.bind(GLOBAL_EVENTS.GROUP_CHANGED, this.eventsListener);
+        this.on('change:active', function() {
+            console.log('XXXXXXXXXXXXXXXXXX ');
+        });
+    },
+    eventsListener: function() {
+        console.log('Picked up ' + GLOBAL_EVENTS.GROUP_CHANGED);
     }
 });
 menuApp.itemView = Backbone.View.extend({
     events: {
         // events to all items in group where clicked item 
-        'click': 'activateLi'
+        'click': 'itemClicked'
     },
     initialize: function(options) {
         this.model = options.model;
-        this.el = options.el;
+        this.$el = options.$el;
+        this.$parentUl = options.$parentUl;
+        this.parentView = options.parentView;
+        this.render();
+    },
+    render: function() {
+
+    },
+    markActive: function() {
+        this.$el.fadeOut(50).fadeIn(50).fadeOut(100).fadeIn(50);
+        var offset = this.$el.offset();
+        var liHeight = this.$el.height();
+        console.log('from top: ' + offset.top + ' li height: ' + liHeight);
+        $('#pointerek .heap').css({height: liHeight + 18});//css({position: 'relative', top: offset.top +'px', left: 0 +'px'});
+        $('#pointerek').offset({top: offset.top + 1, left: offset.left + 240});
     },
     destroy: function() {
         console.log('destroying itemView');
@@ -94,47 +134,47 @@ menuApp.itemView = Backbone.View.extend({
     getGroupName: function() {
         return this.model.get('group');
     },
-    activateLi: function(event) {
-        var text = this.model.get('text'), group = this.model.get('group');
+    itemClicked: function(event) {
         event.preventDefault();
+        this.parentView.listClicked(); // for want of <ul> actions before <li>
+        this.parentView.setActiveModel(this.model);
+        console.log('Item clicked before list.');
+        var text = this.model.get('text'), group = this.model.get('group');
+
+        // all models will hear this event
+//        publishSubscribe.trigger(GLOBAL_EVENTS.GROUP_CHANGED, {groupName: group});
+//        if (text === group) {
+//            this.model.set({active: true});
+//        }
+        this.markActive();
         this.updateJestestu(group, text);
+        this.updateTitle(text)
         this.sendGetRequest(group, text);
+        this.render();
     },
     updateJestestu: function(group, text) {
         var $jestestuSpan = $('#jestestu span'),
                 separator = ' » ';
-
-//        alert('clicked ' + event.target.parentElement.offsetTop);
         if (group === text) {
             $jestestuSpan.text(group);
         } else {
             $jestestuSpan.text(group + separator + text);
         }
-        $('#contentContainer h1').text(separator + text);
+    },
+    updateTitle: function(text) {
+        $('#contentContainer h1').text(text);
     },
     sendGetRequest: function(group, text) {
         var rootUrl = 'lukasfloorcom-1.0/';
         console.log('sending get request from ' + this.model.get('text'));
         if (group === text) {
-            Backbone.history.navigate(rootUrl + this.encodeToUrl(group), true);
+            var txt = utilsApp.encoder.encodeToURL(group);
+            Backbone.history.navigate(rootUrl + txt, true);
         } else {
-            Backbone.history.navigate(rootUrl + this.encodeToUrl(group) + '-' + this.encodeToUrl(text), true);
+            Backbone.history.navigate(rootUrl + utilsApp.encoder.encodeToURL(group) + '-' + utilsApp.encoder.encodeToURL(text), true);
 //            window.location = this.encodeToUrl(group) + '-' + this.encodeToUrl(text);
         }
         // todo
-    },
-    encodeToUrl: function(textToEncode) {
-        var encoded, disallowed = 'ĄąĘęŚśŻżŹźÓóŁłŃń', allowed = 'AaEeSsZzZzOoLlNn';
-        encoded = this.replace(disallowed, allowed, textToEncode);
-        return encoded;
-    },
-    replace: function(disallowed, allowed, string) {
-        var encoded = string.replace(/ /g, '-');
-        _.each(disallowed.split(""), function(element, index, list) {
-            var regex = new RegExp(element, "gi");
-            encoded = encoded.replace(regex, allowed[index + 1]);
-        });
-        return encoded;
     }
 });
 menuApp.MyRouter = Backbone.Router.extend({
@@ -146,18 +186,19 @@ menuApp.MyRouter = Backbone.Router.extend({
     }
 });
 $(function() {
-    // Enable pushState for compatible browsers.
+    new textimageApp.imageView();
     var menuview = new menuApp.menuView(),
-    router = new menuApp.MyRouter(),
-    enablePushState = true,
-    pushState = !!(enablePushState && window.history && window.history.pushState),
+            router = new menuApp.MyRouter(),
+            // Enable pushState for compatible browsers.
+            enablePushState = true,
+            pushState = !!(enablePushState && window.history && window.history.pushState),
 //    historyHash = {};
 //    if (pushState) {
 //        historyHash = {pushState: pushState, root: 'lukasfloorcom-1.0/'}
 //    } else {
 //        historyHash = {pushState: pushState}
 //    }
-        historyHash = {pushState: pushState}
+            historyHash = {pushState: pushState}
     Backbone.history.start(historyHash);
 //    var itemview = new menuApp.itemView();
 });

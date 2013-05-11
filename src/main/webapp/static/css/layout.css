@@ -14,11 +14,21 @@ h1 {
 #header {
     height: 250px;
 }
-#categoryIllustrator {
-
+#categoryIllustrator .heap {
+    width: 400px; height: 250px;
+}
+#pointerek {
+    position: absolute;
+    display: inline-block;
+    left: 240px;
+    top:0px;
+}
+#pointerek .heap {
+    width: 34px;
+    height: 34px;
 }
 .heap {
-   position: relative;
+    position: relative;
 }
 .layer {
     width: 100%;
@@ -26,7 +36,7 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    
+
 }
 .zero {
     z-index: 0;
@@ -34,21 +44,35 @@ h1 {
 .one {
     z-index: 1;
 }
-#categoryIllustrator .heap {
-    width: 400px; height: 250px;
+.arrow {
+    background-color: greenyellow;
+    background-position: right;
+    background-image: url('../images/arrowWhite.png');
 }
-#menu {
-    width: 240px;
+#nav {
+    width: 250px;
+    float: left;
+    margin-top: 60px;
 }
-#menu ul {
-    padding: 5px 5px 5px 5px;
-    margin-top: 50px;
+#nav ul {
+    list-style-position: inside;
+    list-style-image: none;
+    list-style-type: none;
+    position: relative;
+    z-index: auto;
 }
-#menu ul li{
+#nav ul li {
+    /*height: 25px;*/
+    padding: 9px 10px 9px 10px;
     display: block;
-    height: 30px;
-    border: thin solid greenyellow;
-    text-align: center;
+    margin: 0px;
+    border-top: solid darkgray 1px;
+}
+#nav ul li:hover {
+    cursor: pointer;
+}
+#nav ul li:first-child {
+    background-color: lightgray;
 }
 #content {
     width: 825px;
@@ -57,8 +81,8 @@ h1 {
 #contentContainer{
     float: left;
     display: block;
-    width: 820px;
-    padding: 5px;
+    width: 796px;
+    padding: 0px 10px 10px 30px;
 }
 #logo {
     position: relative;
@@ -73,23 +97,7 @@ h1 {
 #jestestu {
     padding: 10px;
 }
-#nav {
-    width: 250px;
-    float: left;
-}
-#nav ul {
-    list-style-position: inside;
-    list-style-image: none;
-    list-style-type: none;
-    position: relative;
-    z-index: auto;
-}
-#nav ul li:hover {
-    cursor: pointer;
-}
-#nav ul li:first-child {
-    background-color: greenyellow;
-}
+
 #jestestu h2 {
     font-size: 15px;
 }
