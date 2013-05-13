@@ -4,3 +4,4 @@
 nb-configuration.xml
 /cache.properties
 **/_notes/
+/deploy/db_migrate/server.log

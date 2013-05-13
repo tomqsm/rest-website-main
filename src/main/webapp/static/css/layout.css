@@ -17,15 +17,20 @@ h1 {
 #categoryIllustrator .heap {
     width: 400px; height: 250px;
 }
-#pointerek {
+#menuPointer {
     position: absolute;
     display: inline-block;
     left: 240px;
     top:0px;
 }
-#pointerek .heap {
+#menuPointer .heap {
     width: 34px;
     height: 34px;
+}
+#gallery li {
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 .heap {
     position: relative;
@@ -47,7 +52,7 @@ h1 {
 .arrow {
     background-color: greenyellow;
     background-position: right;
-    background-image: url('../images/arrowWhite.png');
+    background-image: url('../images/arrowWhiteOptimised.png');
 }
 #nav {
     width: 250px;
@@ -81,8 +86,8 @@ h1 {
 #contentContainer{
     float: left;
     display: block;
-    width: 796px;
-    padding: 0px 10px 10px 30px;
+    width: 786px;
+    padding: 0px 10px 10px 40px;
 }
 #logo {
     position: relative;
@@ -100,6 +105,11 @@ h1 {
 
 #jestestu h2 {
     font-size: 15px;
+}
+#footer{
+    margin-top: 25px;
+    border-top: dashed 1px #0077b3;
+    padding-top: 5px;
 }
 .closable {
     background-image: url('../images/sprite1.png');
@@ -127,10 +137,10 @@ h1 {
     margin-left: auto;
     margin-right: auto;
 }
-.center:first-child {
-    /*background-color: greenyellow;*/
+/*.center:first-child {
+    background-color: greenyellow;
     height: 300px;
-}
+}*/
 .padded5 {
     padding: 5px 5px 5px 5px;
 }

@@ -78,6 +78,7 @@
                 <exclude name="deploy/*.sh" />
                 <exclude name="target/**" />
                 <exclude name="_notes/**" />
+                <exclude name="_notes" />
                 <exclude name=".*" />
                 <exclude name="nb-configuration.xml" />
                 <exclude name="*.mwb" />

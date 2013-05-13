@@ -41,6 +41,9 @@
     <target name="download-dump-remote" description="produces a dump file">
         <scp file="${remote.server.user}:${password}@${remote.server.ip}:${remote.erest.dropbox.migration}/second_screen.sql" todir="."/>
     </target>
+    <target name="download-log" description="produces a dump file">
+        <scp file="${remote.server.user}:${password}@${remote.server.ip}:${glasfish.log}/server.log" todir="."/>
+    </target>
     
     <target name="upload-dump-out">
         <scp todir="${remote.server.user}@${remote.server.ip}:${remote.erest.dropbox.migration}" keyfile="${key.file.location}" passphrase="${passphrase}" trust="true" >

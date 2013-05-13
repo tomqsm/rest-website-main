@@ -5,11 +5,13 @@ menuApp.groupModel = Backbone.Model.extend({
 });
 menuApp.menuView = Backbone.View.extend({
     el: '#nav',
-    menuGroups: this.$('ul'),
+    menuGroups: $('#nav').find('ul'),
     initialize: function() {
         this.menuGroupsViews = [];
+        console.log('found: ' + this.menuGroups.length + ' ul in #nav')
         var self = this;
         _.each(this.menuGroups, function(element, index, list) {
+            console.log('index ' + index);
             var $ul = $(element);
             self.menuGroupsViews.push(new menuApp.groupView({$list: $ul}));
         });
@@ -46,7 +48,7 @@ menuApp.menuView = Backbone.View.extend({
 menuApp.groupView = Backbone.View.extend({
     events: {
         // events to all items in group where clicked item 
-        'click': 'listClicked'
+//        'click': 'listClicked'
     },
     initialize: function(options) {
         this.itemViews = [];
@@ -68,8 +70,8 @@ menuApp.groupView = Backbone.View.extend({
         this.groupName = groupName;
     },
     listClicked: function(event) {
-        console.log('List clicked after item.');
-        this.render();
+//        console.log('List clicked after item.');
+//        this.render();
     },
     destroy: function() {
         console.log('destroying group view');
@@ -124,9 +126,9 @@ menuApp.itemView = Backbone.View.extend({
         this.$el.fadeOut(50).fadeIn(50).fadeOut(100).fadeIn(50);
         var offset = this.$el.offset();
         var liHeight = this.$el.height();
-        console.log('from top: ' + offset.top + ' li height: ' + liHeight);
-        $('#pointerek .heap').css({height: liHeight + 18});//css({position: 'relative', top: offset.top +'px', left: 0 +'px'});
-        $('#pointerek').offset({top: offset.top + 1, left: offset.left + 240});
+        console.log('made active');
+        $('#menuPointer .heap').css({height: liHeight + 18});//css({position: 'relative', top: offset.top +'px', left: 0 +'px'});
+        $('#menuPointer').offset({top: offset.top + 1, left: offset.left + 240});
     },
     destroy: function() {
         console.log('destroying itemView');
@@ -162,7 +164,7 @@ menuApp.itemView = Backbone.View.extend({
         }
     },
     updateTitle: function(text) {
-        $('#contentContainer h1').text(text);
+        $('#contentContainer h1:first-child').text(text);
     },
     sendGetRequest: function(group, text) {
         var rootUrl = 'lukasfloorcom-1.0/';
@@ -174,7 +176,6 @@ menuApp.itemView = Backbone.View.extend({
             Backbone.history.navigate(rootUrl + utilsApp.encoder.encodeToURL(group) + '-' + utilsApp.encoder.encodeToURL(text), true);
 //            window.location = this.encodeToUrl(group) + '-' + this.encodeToUrl(text);
         }
-        // todo
     }
 });
 menuApp.MyRouter = Backbone.Router.extend({
@@ -201,4 +202,6 @@ $(function() {
             historyHash = {pushState: pushState}
     Backbone.history.start(historyHash);
 //    var itemview = new menuApp.itemView();
+
+    $("a[rel^='lukasfloor']").prettyPhoto({social_tools:false});
 });
