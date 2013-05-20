@@ -20,7 +20,7 @@ h1 {
 #menuPointer {
     position: absolute;
     display: inline-block;
-    left: 250px;
+    left: 240px;
     top:0px;
 }
 #menuPointer .heap {
@@ -54,6 +54,7 @@ h1 {
     background-position: right;
     background-image: url('../images/arrowWhiteOptimised.png');
 }
+
 #nav {
     width: 250px;
     float: left;
@@ -77,11 +78,7 @@ h1 {
     cursor: pointer;
 }
 #nav ul li:first-child {
-    background-color: thistle;
-}
-.toactive  {
-    background: greenyellow; 
-    background-color: greenyellow !important;
+    background-color: lightgray;
 }
 #content {
     width: 825px;

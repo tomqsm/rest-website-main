@@ -12,6 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
         
     <repositories>
@@ -138,6 +139,17 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.2.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.ocpsoft.prettytime</groupId>
+            <artifactId>prettytime</artifactId>
+            <version>2.1.2.Final</version>
+        </dependency>
+        <!--        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.9</version>
+        </dependency>-->
+            
     </dependencies>
 
     <build>
@@ -199,10 +211,8 @@
                             <tasks>
                                 <!--if - else dependent task requires ant-contrib-->
                                 <taskdef resource="net/sf/antcontrib/antlib.xml" 
-                                         classpathref="maven.plugin.classpath" />
-                                
+                                         classpathref="maven.plugin.classpath" />                         
                                 <ant target="undeploy" inheritRefs="true"></ant>
-                                    
                             </tasks>
                         </configuration>
                     </execution>

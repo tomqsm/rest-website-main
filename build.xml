@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <project name="memset" default="run" basedir=".">
+    <!-- <taskdef> needed for running of 'if' 'else' in targets so this build
+    file could be use in Linux and Windows without modifications -->
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    
     <property file="../to_upload/config/upload.properties"/>
     <property file="deploy/to_upload/config/upload.properties"/>
     <!--<property name="gf" value="/home/tomasz/glassfish-3.1.2.2/glassfish/domains/domain1/autodeploy"/>-->
@@ -24,7 +27,7 @@
     </target>
     
     <!--this tasks runs via mvn ant-run is triggered there-->
-    <target name="deploy" depends="checkos" description="Copying a war file to server autodeploy.">
+    <target name="deploy" depends="checkos, updateVersion" description="Copying a war file to server autodeploy.">
         <if>
             <equals arg1="${isWindows}" arg2="true"/>
             <then>
@@ -63,7 +66,8 @@
         </if>
     </target>
     
-    <target name="upload-project">
+    <!--UPLOAD AS MVN PROJECT-->
+    <target name="upload-project" depends="">
         <scp todir="${remote.server.user}@${remote.server.ip}:${mvnprojects}/lukasfloorcom-1.0" password="${password}" >
             <fileset dir="${basedir}">
                 <modified update="true" 
@@ -86,5 +90,24 @@
                 <exclude name="cache.properties" />
             </fileset>
         </scp>
+    </target>
+    
+    <!--    EXTERNAL TARGETS -->
+    
+    <target name="number.tests" description="uses node runtime, so it needs to be set-up">
+        <echo message="Setting numbers to tests in listed files."/>
+        <apply executable="node">
+            <srcfile/>
+            <fileset dir="${basedir}" includes="numbertests.js"/>
+            <arg value="menuAppTests.js" />
+        </apply>
+    </target>
+    <target name="updateVersion" description="uses node runtime, so it needs to be set-up">
+        <echo message="Updating project version."/>
+        <apply executable="node">
+            <srcfile/>
+            <fileset dir="${basedir}" includes="versionupdater.js"/>
+            <arg value="" />
+        </apply>
     </target>
 </project>

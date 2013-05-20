@@ -6,12 +6,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-        <title>JSP Page</title>
-        <!-- Bootstrap -->
-        <!--<link href="static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">-->
+        <meta name="description" content="Parkieciarstwo, odnowa podłóg. Z nami stara podłoga będzie jak nowa, a nowa będzie trwać i cieszyć."/>
+        <meta name="keywords" content="podłoga,podłogi,cyklinowanie,podłoga Bielsko-Biała,podłoga Bielsko,cyklinowanie Bielsko Biała,cyklinowanie Bielsko,odnowienie podłogi,podlogi,cyklinowanie podlogi Bielsko,cyklinowanie Bielsko Biala"/>
+        <meta name="author" content="Łukasz Dożak"/>
+        <title>Cyklinowanie, parkiety, drzwi, schody.</title>
         <link rel="stylesheet" type="text/css" href="static/css/reset.css" />
-        <link rel="stylesheet" type="text/css" href="static/css/layout.css" />
-        <link rel="stylesheet" type="text/css" href="static/css/top_banner.css" />
+        <link rel="stylesheet" type="text/css" href="static/css/layout.css"/>
+        <!--<link rel="stylesheet" type="text/css" href="static/css/layoutPrint.css" media="print"/>-->
         <link rel="stylesheet" type="text/css" href="static/css/fontSizer.css" />
         <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 
@@ -76,19 +77,17 @@
                 <li>Kontakt</li>
             </ul>
             <ul>
-                <li>
+                <li>Witamy
                     <div id="menuPointer">
                         <div class="heap">
                             <div class="layer zero"></div>
                             <div class="layer one arrow"></div>
                         </div>
                     </div>
-                    Witamy
                 </li>
                 <li>Informacje ogólne</li>
                 <li>O nas</li>
             </ul>
-
         </div>
         <div id="contentContainer" class="">
             <h1>Witamy</h1>
@@ -100,19 +99,19 @@
     </div>
     <div class="clearLeft"></div>
     <div id="footer" class="center">
-        <div>Lukasfloor 2013</div>
-    </div>
+        <div>Lukasfloor 2013, ostatnia aktualizacja <c:out value="${requestScope.time}"></c:out>, wersja <c:out value="${requestScope.version}"></c:out></div>
+        </div>
 
-    <!-- page dependencies-->
-    <script src="static/js/libs/jquery-1.8.1.min.js"></script>
-    <script src="static/js/libs/underscore.js"></script>
-    <script src="static/js/libs/backbone.js"></script>
-    <script src="static/js/globals.js"></script>
-    <script src="static/js/locatorApp.js"></script>
-    <!--<script src="static/js/advertApp.js"></script>-->
-    <script src="static/js/utilsApp.js"></script>
-    <script src="static/js/textimageApp.js"></script>
-    <script src="static/js/menuApp.js"></script>
+        <!-- page dependencies-->
+        <script src="static/js/libs/jquery-1.8.1.min.js"></script>
+        <script src="static/js/libs/underscore.js"></script>
+        <script src="static/js/libs/backbone.js"></script>
+        <script src="static/js/globals.js"></script>
+        <script src="static/js/locatorApp.js"></script>
+        <!--<script src="static/js/advertApp.js"></script>-->
+        <script src="static/js/utilsApp.js"></script>
+        <script src="static/js/textimageApp.js"></script>
+        <script src="static/js/menuApp.js"></script>
 
     <%@ include file="includes/prezentacjaScriptTag.jsp" %>
     <!--Tests dependencies.-->

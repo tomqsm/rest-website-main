@@ -2,6 +2,11 @@ package biz.letsweb.erest.resources;
 
 import biz.letsweb.erest.domain.dao.BookmarkDao;
 import biz.letsweb.erest.domain.xml.entities.Bookmark;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -15,19 +20,20 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
+import org.ocpsoft.prettytime.PrettyTime;
 
 @Path("/")
 public class IndexResource {
 
     private static Logger LOG = Logger.getLogger(IndexResource.class);
-    
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{param}")
     public Bookmark find(@PathParam("param") int param) {
         return new BookmarkDao().findById(param);
     }
-    
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("rest")
@@ -37,7 +43,7 @@ public class IndexResource {
         } catch (Exception ex) {
         }
     }
-    
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("test")
@@ -46,13 +52,13 @@ public class IndexResource {
         try {
             String params = "?test=true";
             if (cookieParam != null && cookieParam.getValue() != null && cookieParam.getValue().length() > 0) {
-                LOG.info("Found cookie: " +  cookieParam.getValue());
+                LOG.info("Found cookie: " + cookieParam.getValue());
             }
             request.getRequestDispatcher("/index.jsp" + params).forward(request, response);
         } catch (Exception ex) {
         }
     }
-    
+
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Produces(MediaType.TEXT_HTML + "; charset=UTF-8")
@@ -61,13 +67,22 @@ public class IndexResource {
         bookmarkDao.create(bookmark);
         return Response.ok("przyjęto " + bookmark.getText()).build();
     }
-    
+
     @GET
-    @Produces(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_HTML)
     public void printMessage(@Context HttpServletResponse response, @Context HttpServletRequest request) {
         try {
+            PrettyTime prettyTime = new PrettyTime(new Locale("pl", "PL"));
+            Properties properties = new Properties();
+            properties.load(this.getClass().getClassLoader().getResourceAsStream("developer.properties"));
+            Date then = new SimpleDateFormat("d/M/yyyy H:m", new Locale("pl", "PL")).parse(properties.getProperty("lastupdate"));
+            String time = prettyTime.format(then);
+            LOG.info(String.format("Pretty time set to: %s.", URLEncoder.encode(time, "UTF-8")));
+            request.setAttribute("time", time);
+            request.setAttribute("version", properties.getProperty("version"));
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         } catch (Exception ex) {
+            LOG.error("error " + ex.getLocalizedMessage());
         }
     }
 }

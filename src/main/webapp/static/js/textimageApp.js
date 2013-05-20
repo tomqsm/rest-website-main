@@ -10,7 +10,6 @@ textimageApp.imageView = Backbone.View.extend({
     el: '#categoryIllustrator .zero',
     initialize: function() {
         console.log(this.$el.html());
-        publishSubscribe.bind(GLOBAL_EVENTS.GROUP_CHANGED, this.eventsListener);
     },
     eventsListener: function() {
         console.log('Image view picked up: ' + GLOBAL_EVENTS.GROUP_CHANGED);
