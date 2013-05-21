@@ -11,6 +11,13 @@ h1 {
 #growl {
     height: 30px;
 }
+.errorMessage{
+    float: left;
+    color: red;
+}
+.spinner {
+    
+}
 #header {
     height: 250px;
 }

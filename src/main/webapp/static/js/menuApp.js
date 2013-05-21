@@ -180,7 +180,7 @@ menuApp.itemView = Backbone.View.extend({
         this.moveMenuPointer();
         var text = $.trim(this.model.get('text')), group = $.trim(this.model.get('group'));
         this.updateJestestu(group, text);
-        this.updateTitle(text)
+        this.updateTitle(text);
         this.sendGetRequest(group, text);
     },
     isGroup: function() {
@@ -200,16 +200,70 @@ menuApp.itemView = Backbone.View.extend({
         }
     },
     updateTitle: function(text) {
-        $('#contentContainer h1:first-child').text(text);
+        console.log('updating title? ');
+        $('#contentContainer h1').text(text);
     },
     sendGetRequest: function(group) {
-        var rootUrl = 'lukasfloorcom-1.0/';
-        Backbone.history.navigate(rootUrl + _.escape(this.model.get('href')), true);
+        var rootUrl = 'lukasfloorcom-1.0/',
+                ajaxFailed = false;
+        
+        Backbone.history.navigate(rootUrl + _.escape(this.model.get('href')));
+        var htmlOrig = $('.ajaxSpinner').html();
+        var $ajaxSpinner = $('.ajaxSpinner').html(' ');
+        var $growl = $('#growl');
+        $growl.empty();
+        var showErrorFlash = function(message) {
+            $growl.append('<div class="errorMessage">' + message + '</div>');
+            $('.errorMessage').fadeOut(4200);
+        }
+        var tout = setTimeout(function() {
+            $ajaxSpinner.html('<img class="spinner" src="static/images/ajax-loading.gif"> ładuje ...</img>');
+        }, 700);
+
+        var jqxhr = $.ajax({
+            url: this.model.get('href'),
+            type: 'get',
+            dataType: 'json',
+            timeout: 5000,
+            beforeSend: function(xhr) {
+                var req = xhr;
+            },
+            statusCode: {
+                404: function(data) {
+                    showErrorFlash('&nbsp Nie znaleziono (404)');
+                }
+            },
+            success: function(data) {
+                console.log('success ' + data.statusText)
+
+            },
+            error: function(data) {
+                console.log('error ' + data.statusText);
+            },
+            complete: function(data) {
+                console.log('complete ' + data.statusText);
+            },
+        }).done(function(data) {
+            console.log('done ' + data.statusText);
+        }).fail(function(data) {
+            ajaxFailed = true;
+            console.log('fail 1 ' + data.statuText);
+        });
+        jqxhr.always(function(data) {
+            clearTimeout(tout);
+            if (ajaxFailed) {
+                console.log('fail 2 ' + data.statusText);
+                $ajaxSpinner.html(htmlOrig);
+                showErrorFlash('Operacja nie powiodła się. Przepraszamy. (' + data.statusText + ')');
+                return;
+            }
+            $ajaxSpinner.html('<p>' + data.text + '</p>' + '<img src="' + data.image + '">');
+        })
     }
 });
 menuApp.MyRouter = Backbone.Router.extend({
     routes: {
-        "lukasfloorcom-1.0/Schody-Instalacja-nowych-schodow": "say"
+        "lukasfloorcom-1.0/schody-odnowa-schodow": "say"
     },
     say: function() {
         alert('hello');

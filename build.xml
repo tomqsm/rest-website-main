@@ -27,7 +27,7 @@
     </target>
     
     <!--this tasks runs via mvn ant-run is triggered there-->
-    <target name="deploy" depends="checkos, updateVersion" description="Copying a war file to server autodeploy.">
+    <target name="deploy" depends="checkos" description="Copying a war file to server autodeploy.">
         <if>
             <equals arg1="${isWindows}" arg2="true"/>
             <then>
@@ -67,7 +67,7 @@
     </target>
     
     <!--UPLOAD AS MVN PROJECT-->
-    <target name="upload-project" depends="">
+    <target name="upload-project" depends="updateVersion">
         <scp todir="${remote.server.user}@${remote.server.ip}:${mvnprojects}/lukasfloorcom-1.0" password="${password}" >
             <fileset dir="${basedir}">
                 <modified update="true" 

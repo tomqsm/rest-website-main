@@ -90,10 +90,13 @@
             </ul>
         </div>
         <div id="contentContainer" class="">
+            <div id="growl"></div>
             <h1>Witamy</h1>
-            <jsp:include page="includes/prezentacja.jsp">
-                <jsp:param name="myParam" value=""/>
-            </jsp:include>
+            <div id="ajaxUpdate" class="ajaxSpinner">
+                <jsp:include page="includes/prezentacja.jsp">
+                    <jsp:param name="myParam" value=""/>
+                </jsp:include>
+            </div>
             <!--<span id="menuPointer" style="position: relative; top: 130px;">»</span><h1>Witamy</h1>-->
         </div>
     </div>
