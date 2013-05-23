@@ -33,19 +33,19 @@ public class IndexResource {
 //    public Bookmark find(@PathParam("param") int param) {
 //        return new BookmarkDao().findById(param);
 //    }
-    @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/{schody : schody.*}")
-    public Bookmark schodyService(@PathParam("schody") String param) throws InterruptedException {
-        LOG.info(param);
-//        Thread.sleep(7000);
-        if (param.toLowerCase().contains("odnowa")) {
-            return new Bookmark(0, "To jest tekst do pokazania o podłodze.", "http://www.naturalflooringsolutions.co.uk/images/floor-sanding.jpg", "");
-        } else if(param.toLowerCase().contains("instalacja")){
-            return new Bookmark(0,"Tekst o instalcji schodów", "http://lakehomedesignsels.com/wp-content/uploads/2013/01/island-home-designs-modern-glass-stairs-150x150.png","");//new BookmarkDao().findById(2);
-        }
-        return new Bookmark(0, "Najlepiej zrobić schody", "http://xaxor.com/wp-content/uploads/2012/05/Japanese-street-fashion-part2-35-150x150.jpg","");//new BookmarkDao().findById(3);
-    }
+//    @GET
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    @Path("/{schody : schody.*}")
+//    public Bookmark schodyService(@PathParam("schody") String param) throws InterruptedException {
+//        LOG.info(param);
+////        Thread.sleep(7000);
+//        if (param.toLowerCase().contains("odnowa")) {
+//            return new Bookmark(0, "To jest tekst do pokazania o podłodze.", "http://www.naturalflooringsolutions.co.uk/images/floor-sanding.jpg", "");
+//        } else if(param.toLowerCase().contains("instalacja")){
+//            return new Bookmark(0,"Tekst o instalcji schodów", "http://lakehomedesignsels.com/wp-content/uploads/2013/01/island-home-designs-modern-glass-stairs-150x150.png","");//new BookmarkDao().findById(2);
+//        }
+//        return new Bookmark(0, "Najlepiej zrobić schody", "http://xaxor.com/wp-content/uploads/2012/05/Japanese-street-fashion-part2-35-150x150.jpg","");//new BookmarkDao().findById(3);
+//    }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

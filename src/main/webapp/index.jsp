@@ -1,6 +1,7 @@
 <%@page session="false" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="rooturl" value="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.servletContext.contextPath}" scope="page" /> 
 <!DOCTYPE html>
 <html lang="pl">
     <head>
@@ -10,17 +11,19 @@
         <meta name="keywords" content="podłoga,podłogi,cyklinowanie,podłoga Bielsko-Biała,podłoga Bielsko,cyklinowanie Bielsko Biała,cyklinowanie Bielsko,odnowienie podłogi,podlogi,cyklinowanie podlogi Bielsko,cyklinowanie Bielsko Biala"/>
         <meta name="author" content="Łukasz Dożak"/>
         <title>Cyklinowanie, parkiety, drzwi, schody.</title>
-        <link rel="stylesheet" type="text/css" href="static/css/reset.css" />
-        <link rel="stylesheet" type="text/css" href="static/css/layout.css"/>
+        <link rel="stylesheet" type="text/css" href="${rooturl}/static/css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="${rooturl}/static/css/layout.css"/>
         <!--<link rel="stylesheet" type="text/css" href="static/css/layoutPrint.css" media="print"/>-->
-        <link rel="stylesheet" type="text/css" href="static/css/fontSizer.css" />
+        <link rel="stylesheet" type="text/css" href="${rooturl}/static/css/fontSizer.css" />
         <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 
     </head>
 </head>
 <body>
-    <div class="relativePointer"></div>
-    <div>
+
+    <c:out value="${rooturl}">root</c:out>
+        <div class="relativePointer"></div>
+        <div>
         <%
             if (request.getParameter("test") != null) {
                 out.println("Should run JS tests.");
@@ -34,7 +37,7 @@
         <div id="categoryIllustrator" class="floatLeft" >
 
             <div class="heap">
-                <div class="layer zero"><img src="static/images/room1.jpg" class="" style=""></div>
+                <div class="layer zero"><img src="${rooturl}/static/images/room1.jpg" class="" style=""></div>
                 <div class="layer one"><span id="categoryText" class="" style="position: relative; top: 220px; font-size: 24px; color: whitesmoke">Podłoga</span></div>
             </div>
 
@@ -42,7 +45,9 @@
         <!--<div class="clearLeft"></div>-->
 
         <div class="floatRight">
-            <%@ include file="static/flash/slogansInclude.html" %>
+            <jsp:include page="static/flash/flash.jsp">
+                <jsp:param name="rooturl" value="${rooturl}/"/>
+            </jsp:include>
         </div>
 
         <div id="address" class="">
@@ -54,8 +59,8 @@
                 <p>Bielsko-Biała</p>
             </div>
         </div>
-        <!--<img id="dynamicSquare" src="http://<%= request.getServerName()%>:<%= request.getServerPort()%>/lukasfloorcom-1.0/image" alt="my sreamed image"/>-->
-        <a href="http://<%= request.getServerName()%>:<%= request.getServerPort()%>/lukasfloorcom-1.0"><img id="logo" src="static/images/logo.png" alt="logo" height="120" width="120"/></a>
+        <!--<img id="dynamicSquare" src="${rooturl}/image" alt="my sreamed image"/>-->
+        <a href="${rooturl}"><img id="logo" src="${rooturl}/static/images/logo.png" alt="logo" height="120" width="120"/></a>
     </div>
     <div id="jestestu" class="center"><span>Witamy</span></div>
     <div class="center">
@@ -75,6 +80,7 @@
                 <li>Prezentacja</li>
                 <li>Cennik</li>
                 <li>Kontakt</li>
+                <li>Logowanie</li>
             </ul>
             <ul>
                 <li>Witamy
@@ -94,7 +100,7 @@
             <h1>Witamy</h1>
             <div id="ajaxUpdate" class="ajaxSpinner">
                 <jsp:include page="includes/prezentacja.jsp">
-                    <jsp:param name="myParam" value=""/>
+                    <jsp:param name="rooturl" value="${rooturl}/"/>
                 </jsp:include>
             </div>
             <!--<span id="menuPointer" style="position: relative; top: 130px;">»</span><h1>Witamy</h1>-->
@@ -106,20 +112,24 @@
         </div>
 
         <!-- page dependencies-->
-        <script src="static/js/libs/jquery-1.8.1.min.js"></script>
-        <script src="static/js/libs/underscore.js"></script>
-        <script src="static/js/libs/backbone.js"></script>
-        <script src="static/js/globals.js"></script>
-        <script src="static/js/locatorApp.js"></script>
-        <!--<script src="static/js/advertApp.js"></script>-->
-        <script src="static/js/utilsApp.js"></script>
-        <script src="static/js/textimageApp.js"></script>
-        <script src="static/js/menuApp.js"></script>
-
-    <%@ include file="includes/prezentacjaScriptTag.jsp" %>
+        <script>var rooturl = '${rooturl}'</script>
+            <script src="${rooturl}/static/js/libs/jquery-1.8.1.min.js"></script>
+    <script src="${rooturl}/static/js/libs/underscore.js"></script>
+    <script src="${rooturl}/static/js/libs/backbone.js"></script>
+    <script src="${rooturl}/static/js/globals.js"></script>
+    <script src="${rooturl}/static/js/locatorApp.js"></script>
+    <!--<script src="static/js/advertApp.js"></script>-->
+    <script src="${rooturl}/static/js/utilsApp.js"></script>
+    <script src="${rooturl}/static/js/textimageApp.js"></script>
+    <script src="${rooturl}/static/js/menuApp.js"></script>
+    <jsp:include page="includes/prezentacjaScriptTag.jsp">
+        <jsp:param name="rooturl" value="${rooturl}/"/>
+    </jsp:include>
     <!--Tests dependencies.-->
     <c:if test="${not empty requestScope.testJS and requestScope.testJS eq true}">
-        <%@ include file="includes/qunitScriptTag.jsp" %>
+        <jsp:include page="includes/qunitScriptTag.jsp">
+            <jsp:param name="rooturl" value="${rooturl}/"/>
+        </jsp:include>
     </c:if>
 </body>
 </html>

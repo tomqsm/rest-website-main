@@ -1,6 +1,9 @@
 body {
     font-family: Verdana;
     /*background-image: url('../images/snowFlakes.png');*/
+    /*background-image: url('http://gdj.gdj.netdna-cdn.com/wp-content/uploads/2012/07/background-pattern-1.jpg');*/
+    /*background-size: 100%;*/
+    /*background-color: #0077b3;*/
 }
 h1 {
     font-size: 24px;
@@ -31,7 +34,7 @@ h1 {
     top:0px;
 }
 #menuPointer .heap {
-    width: 34px;
+    width: 20px;
     height: 34px;
 }
 #gallery li {
@@ -59,7 +62,7 @@ h1 {
 .arrow {
     background-color: greenyellow;
     background-position: right;
-    background-image: url('../images/arrowWhiteOptimised.png');
+    /*background-image: url('../images/arrowWhiteOptimised.png');*/
 }
 #nav {
     width: 250px;
@@ -102,7 +105,7 @@ h1 {
 }
 #logo {
     position: relative;
-    left: 930px;
+    left: 860px;
     top: -230px;
 }
 #dynamicSquare {

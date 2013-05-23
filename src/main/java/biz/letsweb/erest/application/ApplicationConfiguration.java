@@ -4,6 +4,7 @@ import biz.letsweb.erest.resources.BookmarkResource;
 import biz.letsweb.erest.resources.CyklinowanieResource;
 import biz.letsweb.erest.resources.GeneratedImageResource;
 import biz.letsweb.erest.resources.IndexResource;
+import biz.letsweb.erest.resources.StairsResource;
 import biz.letsweb.erest.resources.StatusResource;
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -27,6 +28,7 @@ public class ApplicationConfiguration extends Application {
         resources.add(StatusResource.class);
         resources.add(IndexResource.class);
         resources.add(CyklinowanieResource.class);
+        resources.add(StairsResource.class);
         return resources;
     }
     

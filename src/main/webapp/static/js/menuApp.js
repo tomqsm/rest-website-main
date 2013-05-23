@@ -16,6 +16,7 @@ menuApp.menuView = Backbone.View.extend({
             self.menuGroupsViews.push(groupView);
         });
     },
+    /* tracks previous and currently focused menu item */
     eventsListener: function(data) {
         var previousItemView = this.getItemViewById(this.previousItemId);
         var currentItemView = this.getItemViewById(data.itemId).addHighlight();
@@ -97,7 +98,7 @@ menuApp.groupView = Backbone.View.extend({
             if (item.isGroup()) {
                 item.model.set({href: utilsApp.encoder.encodeToURL(this.groupName).toLowerCase()})
             } else {
-                item.model.set({href: utilsApp.encoder.encodeToURL(this.groupName + ' ' + text).toLowerCase()});
+                item.model.set({href: utilsApp.encoder.encodeToURL(this.groupName + '/' + text).toLowerCase()});
             }
             this.itemViews.push(item);
         }, this));
@@ -131,7 +132,7 @@ menuApp.menuItemModel = Backbone.Model.extend({
     initialize: function() {
         _.bindAll(this); //without this you cannot use this.id
 
-    },
+    }
 });
 menuApp.itemView = Backbone.View.extend({
     events: {
@@ -151,8 +152,9 @@ menuApp.itemView = Backbone.View.extend({
             this.addHighlight();
         }
     },
+    /* returns this so you can chain in ul view */
     addHighlight: function() {
-        this.$el.addClass(this.activeClass);
+        return this.$el.addClass(this.activeClass);
     },
     removeHighlight: function() {
         this.$el.removeClass(this.activeClass);
@@ -206,8 +208,9 @@ menuApp.itemView = Backbone.View.extend({
     sendGetRequest: function(group) {
         var rootUrl = 'lukasfloorcom-1.0/',
                 ajaxFailed = false;
-        
-        Backbone.history.navigate(rootUrl + _.escape(this.model.get('href')));
+        var modelurl = this.model.get('href');
+        console.log(modelurl);
+        Backbone.history.navigate(rootUrl + modelurl);
         var htmlOrig = $('.ajaxSpinner').html();
         var $ajaxSpinner = $('.ajaxSpinner').html(' ');
         var $growl = $('#growl');
@@ -216,12 +219,13 @@ menuApp.itemView = Backbone.View.extend({
             $growl.append('<div class="errorMessage">' + message + '</div>');
             $('.errorMessage').fadeOut(4200);
         }
+        /*rooturl is set in script tag in jsp*/
         var tout = setTimeout(function() {
-            $ajaxSpinner.html('<img class="spinner" src="static/images/ajax-loading.gif"> ładuje ...</img>');
+            $ajaxSpinner.html('<img class="spinner" src="' + rooturl + '/static/images/ajax-loading.gif"> ładuje ...</img>');
         }, 700);
-
+        /* appends models url to existing ending in url */
         var jqxhr = $.ajax({
-            url: this.model.get('href'),
+            url: rooturl + '/' + modelurl,
             type: 'get',
             dataType: 'json',
             timeout: 5000,
@@ -266,7 +270,7 @@ menuApp.MyRouter = Backbone.Router.extend({
         "lukasfloorcom-1.0/schody-odnowa-schodow": "say"
     },
     say: function() {
-        alert('hello');
+        alert('hello ');
     }
 });
 $(function() {
