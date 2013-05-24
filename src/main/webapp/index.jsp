@@ -20,10 +20,8 @@
     </head>
 </head>
 <body>
-
-    <c:out value="${rooturl}">root</c:out>
-        <div class="relativePointer"></div>
-        <div>
+    <div class="relativePointer"></div>
+    <div>
         <%
             if (request.getParameter("test") != null) {
                 out.println("Should run JS tests.");
@@ -112,8 +110,8 @@
         </div>
 
         <!-- page dependencies-->
-        <script>var rooturl = '${rooturl}'</script>
-            <script src="${rooturl}/static/js/libs/jquery-1.8.1.min.js"></script>
+            <script>var rooturl = '${rooturl}'</script>
+    <script src="${rooturl}/static/js/libs/jquery-1.8.1.min.js"></script>
     <script src="${rooturl}/static/js/libs/underscore.js"></script>
     <script src="${rooturl}/static/js/libs/backbone.js"></script>
     <script src="${rooturl}/static/js/globals.js"></script>

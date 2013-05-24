@@ -6,8 +6,8 @@ menuApp.menuView = Backbone.View.extend({
     el: '#nav',
     menuGroups: $('#nav').find('ul'),
     initialize: function() {
-        _.bindAll(this);
-        eventDispatcher.bind(GLOBAL_EVENTS.ITEM_CLICKED, this.eventsListener);
+//        _.bindAll(this);
+        eventDispatcher.on(GLOBAL_EVENTS.ITEM_CLICKED, this.eventsListener,this);
         this.menuGroupsViews = [];
         console.log('found: ' + this.menuGroups.length + ' ul in #nav')
         var self = this;
@@ -32,12 +32,6 @@ menuApp.menuView = Backbone.View.extend({
             }
         }
         this.previousItemId = data.itemId;
-    },
-    destroy: function() {
-        console.log('destroying menu view');
-        // Calls the method named by destroy on each value in the list. 
-        // Any extra arguments passed to invoke will be forwarded on to the method invocation.
-        _.invoke(this.menuGroupsViews, 'destroy');
     },
     countMenuGroups: function() {
         return this.menuGroups.length;
@@ -72,6 +66,10 @@ menuApp.menuView = Backbone.View.extend({
     render: function() {
         // set starting <li>
 //        this.menuGroupsViews[3].itemViews[0].highlight();
+    },
+    destroy: function() {
+        _.invoke(this.menuGroupsViews, 'destroy');
+         eventDispatcher.off(GLOBAL_EVENTS.ITEM_CLICKED, this.eventsListener);
     }
 });
 
@@ -107,8 +105,9 @@ menuApp.groupView = Backbone.View.extend({
         console.log(' <ul> clicked ');
     },
     destroy: function() {
-        console.log('destroying group view');
         _.invoke(this.itemViews, 'destroy');
+        console.log('off group ' + this.groupName);
+//        this.off(); // doesn't seem to bind to any events so no need to call off
     },
     countLis: function() {
         return this.itemViews.length;
@@ -130,8 +129,7 @@ menuApp.menuItemModel = Backbone.Model.extend({
         cssClass: ''
     },
     initialize: function() {
-        _.bindAll(this); //without this you cannot use this.id
-
+//        _.bindAll(this); //without this you cannot use this.id
     }
 });
 menuApp.itemView = Backbone.View.extend({
@@ -140,7 +138,7 @@ menuApp.itemView = Backbone.View.extend({
         'click': 'itemClicked'
     },
     initialize: function(options) {
-        _.bindAll(this);
+//        _.bindAll(this);
         this.model = options.model;
         this.activeClass = 'toactive'; //css class to highlight <li>
         this.$el = options.$el;
@@ -166,9 +164,6 @@ menuApp.itemView = Backbone.View.extend({
         $('#menuPointer .heap').css({height: liHeight + 18});//css({position: 'relative', top: offset.top +'px', left: 0 +'px'});
         $('#menuPointer').offset({top: offset.top + 1, left: offset.left + 250}); //allow for 1px border and move to the right
     },
-    destroy: function() {
-        console.log('destroying itemView');
-    },
     getGroupName: function() {
         return this.model.get('group');
     },
@@ -186,7 +181,8 @@ menuApp.itemView = Backbone.View.extend({
         this.sendGetRequest(group, text);
     },
     isGroup: function() {
-        var idx = _.indexOf(['00', '10', '20', '30'], this.model.get('id'));
+        var ulIds = ['00', '10', '20', '30'];
+        var idx = _.indexOf(ulIds, this.model.get('id'));
         if (idx === -1) {
             return false
         }
@@ -263,6 +259,13 @@ menuApp.itemView = Backbone.View.extend({
             }
             $ajaxSpinner.html('<p>' + data.text + '</p>' + '<img src="' + data.image + '">');
         })
+    },
+    destroy: function() {
+        console.log('off item ' + this.model.get('id'));
+//        this.off('click');
+        this.$el.off();
+        this.model.off();
+        
     }
 });
 menuApp.MyRouter = Backbone.Router.extend({

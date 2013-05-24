@@ -3,8 +3,7 @@ module('menuApp overall', {
         this.menuAppView = new menuApp.menuView();
     },
     teardown: function() {
-        this.menuAppView = null;
-//        this.menuAppView.destroy();
+        this.menuAppView.destroy();
     }
 });
 test('#1 counts menu groups correctly', function() {
@@ -16,7 +15,7 @@ test('#2 counts menu groups views correctly', function() {
 test('#3 counts lis in groups', function() {
     equal(this.menuAppView.countItemsInGroupByIndex(0), 3);
     equal(this.menuAppView.countItemsInGroupByIndex(1), 3);
-    equal(this.menuAppView.countItemsInGroupByIndex(2), 4);
+    equal(this.menuAppView.countItemsInGroupByIndex(2), 5);
     equal(this.menuAppView.countItemsInGroupByIndex(3), 3);
 });
 test('#4 gets group name by index', function() {
