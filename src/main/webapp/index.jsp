@@ -110,13 +110,12 @@
         </div>
 
         <!-- page dependencies-->
-            <script>var rooturl = '${rooturl}'</script>
+    <script>var rooturl = '${rooturl}'</script>
     <script src="${rooturl}/static/js/libs/jquery-1.8.1.min.js"></script>
     <script src="${rooturl}/static/js/libs/underscore.js"></script>
     <script src="${rooturl}/static/js/libs/backbone.js"></script>
     <script src="${rooturl}/static/js/globals.js"></script>
     <script src="${rooturl}/static/js/locatorApp.js"></script>
-    <!--<script src="static/js/advertApp.js"></script>-->
     <script src="${rooturl}/static/js/utilsApp.js"></script>
     <script src="${rooturl}/static/js/textimageApp.js"></script>
     <script src="${rooturl}/static/js/menuApp.js"></script>

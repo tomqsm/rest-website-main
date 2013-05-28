@@ -27,8 +27,29 @@ public class StairsResource {
 //        /schody/odnowa-schodow
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Bookmark find(@Context HttpServletResponse response, @Context HttpServletRequest request) throws ServletException, IOException, ParseException, InterruptedException {
+        String header = request.getHeader("X-Requested-With");
+//        Thread.sleep(5000);
+        PrettyTime prettyTime = new PrettyTime(new Locale("pl", "PL"));
+            Properties properties = new Properties();
+            properties.load(this.getClass().getClassLoader().getResourceAsStream("developer.properties"));
+            Date then = new SimpleDateFormat("d/M/yyyy H:m", new Locale("pl", "PL")).parse(properties.getProperty("lastupdate"));
+            String time = prettyTime.format(then);
+            LOG.info(String.format("Pretty time set to: %s.", URLEncoder.encode(time, "UTF-8")));
+            request.setAttribute("time", time);
+            request.setAttribute("version", properties.getProperty("version"));
+        if (header != null && header.equals("XMLHttpRequest")) {
+            return new Bookmark(0, " " + header, "http://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Valued_image_seal.svg/64px-Valued_image_seal.svg.png", "");
+        } else {
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        }
+        return null;
+    }
+    
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{robota}")
-    public Bookmark find(@PathParam("robota") String param, @Context HttpServletResponse response, @Context HttpServletRequest request) throws ServletException, IOException, ParseException, InterruptedException {
+    public Bookmark findJob(@PathParam("robota") String param, @Context HttpServletResponse response, @Context HttpServletRequest request) throws ServletException, IOException, ParseException, InterruptedException {
         String header = request.getHeader("X-Requested-With");
         String url = param;
 //        Thread.sleep(5000);

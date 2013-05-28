@@ -27,3 +27,9 @@ test('#4 gets group name by index', function() {
 test('#5 gets correct view by id', function(){
     equal(this.menuAppView.getItemViewById('30').model.get('group'), 'Witamy');
 });
+test('gets view item by url', function(){
+   var url = 'schody/odnowa-schodow' ;
+   var itemView = this.menuAppView.getItemViewByUrl(url);
+   notEqual(itemView, null);
+   equal(itemView, 'object');
+});

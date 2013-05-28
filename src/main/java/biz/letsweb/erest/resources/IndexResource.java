@@ -48,8 +48,7 @@ public class IndexResource {
 //    }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("rest")
+    @Produces({MediaType.TEXT_HTML})
     public void showIndex(@Context HttpServletResponse response, @Context HttpServletRequest request) {
         try {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
@@ -57,45 +56,45 @@ public class IndexResource {
         }
     }
 
-    @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("test")
-    public void allowJSTests(@Context HttpServletResponse response,
-            @Context HttpServletRequest request, @CookieParam("JSESSIONID") javax.ws.rs.core.Cookie cookieParam) {
-        try {
-            String params = "?test=true";
-            if (cookieParam != null && cookieParam.getValue() != null && cookieParam.getValue().length() > 0) {
-                LOG.info("Found cookie: " + cookieParam.getValue());
-            }
-            request.getRequestDispatcher("/index.jsp" + params).forward(request, response);
-        } catch (Exception ex) {
-        }
-    }
-
-    @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces(MediaType.TEXT_HTML + "; charset=UTF-8")
-    public Response create(Bookmark bookmark) {
-        BookmarkDao bookmarkDao = new BookmarkDao();
-        bookmarkDao.create(bookmark);
-        return Response.ok("przyjęto " + bookmark.getText()).build();
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_HTML)
-    public void printMessage(@Context HttpServletResponse response, @Context HttpServletRequest request) {
-        try {
-            PrettyTime prettyTime = new PrettyTime(new Locale("pl", "PL"));
-            Properties properties = new Properties();
-            properties.load(this.getClass().getClassLoader().getResourceAsStream("developer.properties"));
-            Date then = new SimpleDateFormat("d/M/yyyy H:m", new Locale("pl", "PL")).parse(properties.getProperty("lastupdate"));
-            String time = prettyTime.format(then);
-            LOG.info(String.format("Pretty time set to: %s.", URLEncoder.encode(time, "UTF-8")));
-            request.setAttribute("time", time);
-            request.setAttribute("version", properties.getProperty("version"));
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        } catch (Exception ex) {
-            LOG.error("error " + ex.getLocalizedMessage());
-        }
-    }
+//    @GET
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    @Path("test")
+//    public void allowJSTests(@Context HttpServletResponse response,
+//            @Context HttpServletRequest request, @CookieParam("JSESSIONID") javax.ws.rs.core.Cookie cookieParam) {
+//        try {
+//            String params = "?test=true";
+//            if (cookieParam != null && cookieParam.getValue() != null && cookieParam.getValue().length() > 0) {
+//                LOG.info("Found cookie: " + cookieParam.getValue());
+//            }
+//            request.getRequestDispatcher("/index.jsp" + params).forward(request, response);
+//        } catch (Exception ex) {
+//        }
+//    }
+//
+//    @POST
+//    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    @Produces(MediaType.TEXT_HTML + "; charset=UTF-8")
+//    public Response create(Bookmark bookmark) {
+//        BookmarkDao bookmarkDao = new BookmarkDao();
+//        bookmarkDao.create(bookmark);
+//        return Response.ok("przyjęto " + bookmark.getText()).build();
+//    }
+//
+//    @GET
+//    @Produces(MediaType.TEXT_HTML)
+//    public void printMessage(@Context HttpServletResponse response, @Context HttpServletRequest request) {
+//        try {
+//            PrettyTime prettyTime = new PrettyTime(new Locale("pl", "PL"));
+//            Properties properties = new Properties();
+//            properties.load(this.getClass().getClassLoader().getResourceAsStream("developer.properties"));
+//            Date then = new SimpleDateFormat("d/M/yyyy H:m", new Locale("pl", "PL")).parse(properties.getProperty("lastupdate"));
+//            String time = prettyTime.format(then);
+//            LOG.info(String.format("Pretty time set to: %s.", URLEncoder.encode(time, "UTF-8")));
+//            request.setAttribute("time", time);
+//            request.setAttribute("version", properties.getProperty("version"));
+//            request.getRequestDispatcher("/index.jsp").forward(request, response);
+//        } catch (Exception ex) {
+//            LOG.error("error " + ex.getLocalizedMessage());
+//        }
+//    }
 }

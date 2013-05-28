@@ -32,8 +32,9 @@ $.fn.animateHighlight = function(highlightColor, duration) {
 };
 var eventDispatcher = _.extend({}, Backbone.Events);
 var GLOBAL_EVENTS = GLOBAL_EVENTS || {
-    GROUP_CLICKED: 'groupClicked',
-    ITEM_CLICKED: 'itemClicked'
+    CATEGORY_CHANGED: 'categoryChanged',
+    ITEM_CLICKED: 'itemClicked',
+    URL_CHANGED: 'urlChanged'
 };
 var DIC = DIC || {
     timeout: [{pl: 'Czas minął'}, {en: 'Timeout'}]
