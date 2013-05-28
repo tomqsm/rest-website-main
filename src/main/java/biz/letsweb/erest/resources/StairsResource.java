@@ -28,6 +28,7 @@ public class StairsResource {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Bookmark find(@Context HttpServletResponse response, @Context HttpServletRequest request) throws ServletException, IOException, ParseException, InterruptedException {
+        LOG.info(request.getContextPath());
         String header = request.getHeader("X-Requested-With");
 //        Thread.sleep(5000);
         PrettyTime prettyTime = new PrettyTime(new Locale("pl", "PL"));

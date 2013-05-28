@@ -1,13 +1,16 @@
 // requires utilsApp
 var menuApp = menuApp || {};
 menuApp.menuView = Backbone.View.extend({
+    enablePushState: false,
     previousItemId: '30',
     currentItemId: '30',
     menuGroupsViews: [],
     el: '#nav',
     menuGroups: $('#nav').find('ul'),
-    initialize: function() {
+    initialize: function(options) {
 //        _.bindAll(this);
+        this.enablePushState = options.enablePushState;
+        console.log('enablePushState is ' + this.enablePushState);
         eventDispatcher.on(GLOBAL_EVENTS.ITEM_CLICKED, this.eventsListener, this);
         eventDispatcher.on(GLOBAL_EVENTS.URL_CHANGED, this.eventsListener, this);
         var self = this;
@@ -15,6 +18,7 @@ menuApp.menuView = Backbone.View.extend({
             var groupView = new menuApp.groupView({$ul: $(ul), index: index});
             self.menuGroupsViews.push(groupView);
         });
+        console.log('app initialised');
     },
     /* tracks previous and currently focused menu item */
     eventsListener: function(data) {
@@ -40,6 +44,7 @@ menuApp.menuView = Backbone.View.extend({
         }
         this.previousItemId = this.currentItemId;
         if (data.type === GLOBAL_EVENTS.URL_CHANGED) {
+            console.log('path piced up');
             currentItemView = this.getItemViewByUrl(data.url);
             /**
              * router sends url_changed event, this pics it up, locates
@@ -268,6 +273,7 @@ menuApp.itemView = Backbone.View.extend({
             dataType: 'json',
             timeout: 5000,
             beforeSend: function(xhr) {
+                console.log('sending AJAX ... ' + this.url);
                 var req = xhr;
             },
             statusCode: {
@@ -311,11 +317,21 @@ menuApp.itemView = Backbone.View.extend({
 });
 menuApp.MyRouter = Backbone.Router.extend({
     routes: {
-        "lukasfloorcom-1.0/": "root",
+        "lukasfloorcom-1.0/": "rootpush",
         "lukasfloorcom-1.0/schody": "schody",
-        "lukasfloorcom-1.0/schody/:usluga": "schody"
+        "lukasfloorcom-1.0/schody/:usluga": "schody",
+        "/*": "rootnopush"
     },
-    root: function() {
+    rootpush: function() {
+        /**
+         * for cases when the browser supports push state
+         */
+        eventDispatcher.trigger(GLOBAL_EVENTS.URL_CHANGED, {url: 'witamy', type: GLOBAL_EVENTS.URL_CHANGED});
+    },
+    rootnopush: function() {
+        /**
+         * for cases when browser doesn't support push state IE
+         */
         eventDispatcher.trigger(GLOBAL_EVENTS.URL_CHANGED, {url: 'witamy', type: GLOBAL_EVENTS.URL_CHANGED});
     },
     schody: function(usluga) {
@@ -328,12 +344,12 @@ menuApp.MyRouter = Backbone.Router.extend({
     }
 });
 $(function() {
+    var enablePushState = true;
     new textimageApp.categoryTextView;
     var imageview = new textimageApp.categoryPictureView();
-    var menuview = new menuApp.menuView(),
-            router = new menuApp.MyRouter(),
+    var menuview = new menuApp.menuView({enablePushState: enablePushState}),
+    router = new menuApp.MyRouter(),
             // Enable pushState for compatible browsers.
-            enablePushState = true,
             pushState = !!(enablePushState && window.history && window.history.pushState),
             historyHash = {pushState: pushState}
     Backbone.history.start(historyHash);
