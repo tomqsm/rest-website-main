@@ -78,7 +78,6 @@
                 <li>Prezentacja</li>
                 <li>Cennik</li>
                 <li>Kontakt</li>
-                <li>Logowanie</li>
             </ul>
             <ul>
                 <li>Witamy

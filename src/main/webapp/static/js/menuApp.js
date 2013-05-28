@@ -1,7 +1,7 @@
 // requires utilsApp
 var menuApp = menuApp || {};
 menuApp.menuView = Backbone.View.extend({
-    enablePushState: false,
+    isPushState: false,
     previousItemId: '30',
     currentItemId: '30',
     menuGroupsViews: [],
@@ -9,8 +9,8 @@ menuApp.menuView = Backbone.View.extend({
     menuGroups: $('#nav').find('ul'),
     initialize: function(options) {
 //        _.bindAll(this);
-        this.enablePushState = options.enablePushState;
-        console.log('enablePushState is ' + this.enablePushState);
+        this.isPushState = options.isPushState;
+        console.log('enablePushState is ' + this.isPushState);
         eventDispatcher.on(GLOBAL_EVENTS.ITEM_CLICKED, this.eventsListener, this);
         eventDispatcher.on(GLOBAL_EVENTS.URL_CHANGED, this.eventsListener, this);
         var self = this;
@@ -316,6 +316,10 @@ menuApp.itemView = Backbone.View.extend({
     }
 });
 menuApp.MyRouter = Backbone.Router.extend({
+    isPushState: false,
+    initialize: function(options) {
+        this.isPushState = options.isPushState;
+    },
     routes: {
         "lukasfloorcom-1.0/": "rootpush",
         "lukasfloorcom-1.0/schody": "schody",
@@ -326,12 +330,14 @@ menuApp.MyRouter = Backbone.Router.extend({
         /**
          * for cases when the browser supports push state
          */
+        if(this.isPushState)
         eventDispatcher.trigger(GLOBAL_EVENTS.URL_CHANGED, {url: 'witamy', type: GLOBAL_EVENTS.URL_CHANGED});
     },
     rootnopush: function() {
         /**
          * for cases when browser doesn't support push state IE
          */
+        if(!this.isPushState)
         eventDispatcher.trigger(GLOBAL_EVENTS.URL_CHANGED, {url: 'witamy', type: GLOBAL_EVENTS.URL_CHANGED});
     },
     schody: function(usluga) {
@@ -344,14 +350,14 @@ menuApp.MyRouter = Backbone.Router.extend({
     }
 });
 $(function() {
-    var enablePushState = true;
+    var enablePushState = true,
+            pushState = !!(enablePushState && window.history && window.history.pushState);
     new textimageApp.categoryTextView;
     var imageview = new textimageApp.categoryPictureView();
-    var menuview = new menuApp.menuView({enablePushState: enablePushState}),
-    router = new menuApp.MyRouter(),
-            // Enable pushState for compatible browsers.
-            pushState = !!(enablePushState && window.history && window.history.pushState),
-            historyHash = {pushState: pushState}
+    var menuview = new menuApp.menuView({isPushState: pushState}),
+    router = new menuApp.MyRouter({isPushState: pushState}),
+    // Enable pushState for compatible browsers.
+    historyHash = {pushState: pushState}
     Backbone.history.start(historyHash);
     $("a[rel^='lukasfloor']").prettyPhoto({social_tools: false});
 });
