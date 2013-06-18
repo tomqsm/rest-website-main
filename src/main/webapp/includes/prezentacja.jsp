@@ -3,8 +3,8 @@
 <div id="gallery">
     <ul class="gallery clearfix">
         <li>
-            <a href="${param.rooturl}static/images/prezentacja/1.jpg" rel="lukasfloor[realizacje]" title="Boazeria poddasze">
-                <img src="${param.rooturl}static/images/prezentacja/thumbnails/1.jpg" width="90" height="90" alt="Boazeria na poddaszu."/>
+            <a href="static/images/prezentacja/1.jpg" rel="lukasfloor[realizacje]" title="Boazeria poddasze">
+                <img src="static/images/prezentacja/thumbnails/1.jpg" width="90" height="90" alt="Boazeria na poddaszu."/>
             </a>
         </li>
         <li>

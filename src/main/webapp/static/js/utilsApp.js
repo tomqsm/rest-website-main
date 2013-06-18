@@ -1,3 +1,5 @@
+
+// utils application 
 var utilsApp = {} || utilsApp;
 utilsApp.encoder = {
     encodeToURL: function(someString) {

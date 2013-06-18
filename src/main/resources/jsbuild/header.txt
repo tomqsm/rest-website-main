@@ -1,0 +1,7 @@
+/*
+
+Author: Tomasz Kusmierczyk
+Resources used: 
+Nicholas C. Zakas, 'Professional Java Script for Web Developers', ed. 3, Wiley 2012.
+
+*/

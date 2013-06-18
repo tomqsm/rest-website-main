@@ -1,0 +1,25 @@
+<#macro masterpage title="ŻżółŁw DefaultTitle" author="Łukasz Dożak">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="author" content="${author}">
+        <meta name="description" content="Parkieciarstwo, odnowa podłóg. Z nami stara podłoga będzie jak nowa, a nowa będzie trwać i cieszyć."/>
+        <meta name="keywords" content="podłoga,podłogi,cyklinowanie,podłoga Bielsko-Biała,podłoga Bielsko,cyklinowanie Bielsko Biała,cyklinowanie Bielsko,odnowienie podłogi,podlogi,cyklinowanie podlogi Bielsko,cyklinowanie Bielsko Biala"/>
+        <title>${title} Cyklinowanie, parkiety, drzwi, schody.</title>
+    </head>
+
+    <body>
+        <div id="header">Header</div>
+        <div>
+            <!--main template nested start-->
+            <#nested/>
+            <!--main template nested end-->
+        </div>
+        <div id="footer">
+            Copyright &copy;2006 YourCompanyName, Inc. or whatever footer you want
+        </div>
+    </body>
+</html>
+</#macro>
+

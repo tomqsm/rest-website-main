@@ -1,3 +1,112 @@
+/*
+
+Author: Tomasz Kusmierczyk
+Resources used: 
+Nicholas C. Zakas, 'Professional Java Script for Web Developers', ed. 3, Wiley 2012.
+
+*/
+
+/**
+ * Protect window.console method calls, e.g. console is not defined on IE
+ * unless dev tools are open, and IE doesn't define console.debug
+ */
+(function() {
+  if (!window.console) {
+    window.console = {};
+  }
+  // union of Chrome, FF, IE, and Safari console methods
+  var m = [
+    "log", "info", "warn", "error", "debug", "trace", "dir", "group",
+    "groupCollapsed", "groupEnd", "time", "timeEnd", "profile", "profileEnd",
+    "dirxml", "assert", "count", "markTimeline", "timeStamp", "clear"
+  ];
+  // define undefined methods as noops to prevent errors
+  for (var i = 0; i < m.length; i++) {
+    if (!window.console[m[i]]) {
+      window.console[m[i]] = function() {};
+    }    
+  } 
+})();
+if (typeof String.prototype.trim !== 'function') {
+    String.prototype.trim = function() {
+        return this.replace(/^\s+|\s+$/g, '');
+    }
+} // IE ver 8 didnt't work without this 14/05/2013
+$.fn.animateHighlight = function(highlightColor, duration) {
+    var highlightBg = highlightColor || "#FFFF9C";
+    var animateMs = duration || 1500;
+    var originalBg = this.css("backgroundColor");
+    this.fadeOut(50).fadeIn(50).fadeOut(50).fadeIn(50);
+};
+var eventDispatcher = _.extend({}, Backbone.Events);
+var GLOBAL_EVENTS = GLOBAL_EVENTS || {
+    CATEGORY_CHANGED: 'categoryChanged',
+    ITEM_CLICKED: 'itemClicked',
+    URL_CHANGED: 'urlChanged'
+};
+var DIC = DIC || {
+    timeout: [{pl: 'Czas minął'}, {en: 'Timeout'}]
+};
+
+// utils application 
+var utilsApp = {} || utilsApp;
+utilsApp.encoder = {
+    encodeToURL: function(someString) {
+        var encoded, disallowed = 'ĄąĘęŚśŻżŹźÓóŁłŃń', allowed = 'AaEeSsZzZzOoLlNn';
+        encoded = utilsApp.replace(disallowed, allowed, someString);
+        return encoded;
+    }
+}
+utilsApp.replace = function(disallowed, allowed, string) {
+    var encoded = string.replace(/ /g, '-');
+    _.each(disallowed.split(""), function(element, index, list) {
+        var regex = new RegExp(element, "gi");
+        encoded = encoded.replace(regex, allowed[index + 1]);
+    });
+    return encoded;
+};
+
+var textimageApp = {} || textimageApp;
+textimageApp.model = Backbone.Model.extend({
+    defaults: {
+        baseURL: '/lukasfloorcom-1.0',
+        category: 'witamy',
+        url: 'http://localhost:8080/lukasfloorcom',
+        fileName: 'fruits',
+        imageFileEnd: 'png',
+        textFileEnd: 'txt'
+    }
+});
+textimageApp.categoryPictureView = Backbone.View.extend({
+    //background
+    el: '#categoryIllustrator .zero',
+    initialize: function() {
+//        console.log(this.$el.html());
+        eventDispatcher.on(GLOBAL_EVENTS.CATEGORY_CHANGED, this.eventsListener, this);
+    },
+    eventsListener: function(data) {
+        console.log('Image view picked up: ' + data.itemId);
+    },
+    render: function() {
+    },
+    destroy: function() {
+        eventDispatcher.off(GLOBAL_EVENTS.CATEGORY_CHANGED, this.eventsListener);
+    }
+});
+textimageApp.categoryTextView = Backbone.View.extend({
+    el: '#categoryIllustrator .zero',
+    initialize: function() {
+        eventDispatcher.on(GLOBAL_EVENTS.CATEGORY_CHANGED, this.eventsListener, this);
+    },
+    eventsListener: function(data) {
+        console.log('Text view picked up: ' + data.itemId);
+    },
+    render: function() {
+    },
+    destroy: function() {
+        eventDispatcher.off(GLOBAL_EVENTS.CATEGORY_CHANGED, this.eventsListener);
+    }
+});
 // requires utilsApp
 var menuApp = menuApp || {};
 menuApp.menuView = Backbone.View.extend({

@@ -111,4 +111,44 @@
             <arg value="" />
         </apply>
     </target>
+    <!--CONCATINATE-->
+    <target name="build_app">
+        <concat destfile="${basedir}/src/main/webapp/static/js/app.js" 
+                fixlastline="yes" encoding="UTF-8" outputencoding="UTF-8">
+            <!--INTROS-->
+            <filelist dir="${basedir}/src/main/resources/jsbuild" files="header.txt"/>
+            <!--MODULE PATTERN OPEN -->
+            <!--<filelist dir="${basedir}/build_parts" files="_open_app_"/>-->
+            <!--APP FILES-->
+            <filelist dir="${basedir}/src/main/webapp/static/js" files="globals.js"/>
+            <filelist dir="${basedir}/src/main/webapp/static/js" files="utilsApp.js"/>
+            <filelist dir="${basedir}/src/main/webapp/static/js" files="textimageApp.js"/>
+            <filelist dir="${basedir}/src/main/webapp/static/js" files="menuApp.js"/>
+            <!--            <filelist dir="${basedir}/my_js_sources" files="tools.js"/>-->
+            <!--<filelist dir="${basedir}/my_js_sources" files="parasitic_combination_inheritance.js"/>-->
+            <!--            <filelist dir="${basedir}/my_js_sources" files="namespacing.js"/>-->
+            <!--MODULE PATTERN CLOSE-->
+            <!--<filelist dir="${basedir}/build_parts" files="_close_app_"/>-->
+        </concat>
+    </target>
+    <target name="build_tests">
+        <concat destfile="${basedir}/unit_test/tests.js">
+            <!--            <filelist dir="${basedir}/my_js_sources" files="generic_test.js"/>-->
+            <!--            <filelist dir="${basedir}/my_js_sources" files="tools_test.js"/>-->
+            <filelist dir="${basedir}/my_js_sources" files="parasitic_combination_inheritance_test.js"/>
+            <!--            <filelist dir="${basedir}/my_js_sources" files="namespacing_test.js"/>-->
+        </concat>
+    </target>
+    <target name="build_app_and_tests" depends="build_app"/>
+    <!--COMPRESS-->
+    <property name="yuicompressor.jar" value="yuicompressor-2.4.7.jar" />
+    <target name="minify_app" depends="build_app">
+        <apply executable="java" parallel="false">
+            <fileset dir="${basedir}/src/main/webapp/static/js" includes="app.js" />
+            <arg line="-jar" />
+            <arg path="${yuicompressor.jar}" />
+            <arg line="-o ${basedir}/src/main/webapp/static/js/app-min.js"/>
+            <srcfile/>
+        </apply>
+    </target>
 </project>

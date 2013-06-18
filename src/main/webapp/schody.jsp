@@ -16,9 +16,7 @@
         <!--<link rel="stylesheet" type="text/css" href="static/css/layoutPrint.css" media="print"/>-->
         <link rel="stylesheet" type="text/css" href="${rooturl}/static/css/fontSizer.css" />
         <!--<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
-        <!-- data-main attribute tells require.js to load
-                     scripts/main.js after require.js loads. -->
-        <!--<script data-main="${rooturl}/static/js/require/main" src="${rooturl}/static/js/libs/require-2.1.6.min.js"></script>-->
+
     </head>
 </head>
 <body>
@@ -96,9 +94,9 @@
         </div>
         <div id="contentContainer" class="">
             <div id="growl"></div>
-            <h1>Witamy</h1>
+            <h1>Schody</h1>
             <div id="ajaxUpdate" class="ajaxSpinner">
-                <jsp:include page="includes/prezentacja.jsp">
+                <jsp:include page="includes/schody.jsp">
                     <jsp:param name="rooturl" value="${rooturl}/"/>
                 </jsp:include>
             </div>
@@ -116,7 +114,9 @@
     <script src="${rooturl}/static/js/libs/underscore.js"></script>
     <script src="${rooturl}/static/js/libs/backbone.js"></script>
     <script src="${rooturl}/static/js/app.js"></script>
-
+    <jsp:include page="includes/prezentacjaScriptTag.jsp">
+        <jsp:param name="rooturl" value="${rooturl}/"/>
+    </jsp:include>
     <!--Tests dependencies.-->
     <c:if test="${not empty requestScope.testJS and requestScope.testJS eq true}">
         <jsp:include page="includes/qunitScriptTag.jsp">
